@@ -1,0 +1,25 @@
+﻿<Window x:Class="WpfLocalHtmlTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+            <StackPanel Grid.Row="0" Orientation="Horizontal"  VerticalAlignment="Center">
+                <TextBlock>Template:</TextBlock>
+                <TextBox Name="TextBoxTemplate">template.html</TextBox>
+                <TextBlock>Data:</TextBlock>
+                <TextBox Name="TextBoxData">$data="Test";</TextBox>
+                    <Button Name="ButtonRefresh" Click="ButtonRefresh_Click">Refresh</Button>
+                    <Button Name="ButtonHelp" Click="ButtonHelp_Click" >Help</Button>
+                    <TextBox>这是一个内置网页的测试程序，点击Refresh后将会寻找template输入框的文件，把其中的Data节点替换成Data输入框中的内容，Include节点替换为包含的文件，仅仅简单的字符串替换所以不支持XML节点格式</TextBox>
+                </StackPanel>
+            </Grid>
+            <WebBrowser Name="WebBrowserTest" Grid.Row="1"></WebBrowser>
+        </Grid>
+    </Grid>
+</Window>
