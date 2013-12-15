@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2013 年 12 月 15 日 04:44
+-- 生成日期: 2013 年 12 月 15 日 04:55
 -- 服务器版本: 5.6.12-log
 -- PHP 版本: 5.4.12
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 --
 -- 数据库: `softwareengineering`
 --
-CREATE DATABASE IF NOT EXISTS `softwareengineering` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `softwareengineering` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `softwareengineering`;
 
 -- --------------------------------------------------------
@@ -30,9 +30,9 @@ USE `softwareengineering`;
 
 CREATE TABLE IF NOT EXISTS `config_line_information` (
   `ID` int(11) NOT NULL,
-  `line_name` text NOT NULL,
-  `start_station_ID` text NOT NULL,
-  `end_station_ID` text NOT NULL,
+  `line_name` text CHARACTER SET utf8 NOT NULL,
+  `start_station_ID` text CHARACTER SET utf8 NOT NULL,
+  `end_station_ID` text CHARACTER SET utf8 NOT NULL,
   `voltage_level` int(11) NOT NULL,
   `rated_current` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `config_line_information` (
 
 CREATE TABLE IF NOT EXISTS `config_station_information` (
   `ID` int(11) NOT NULL,
-  `station_name` text NOT NULL,
+  `station_name` text CHARACTER SET utf8 NOT NULL,
   `longitude` float NOT NULL,
   `latitude` float NOT NULL,
   `builded_time` int(11) NOT NULL,
@@ -61,9 +61,9 @@ CREATE TABLE IF NOT EXISTS `config_station_information` (
 
 CREATE TABLE IF NOT EXISTS `realtime_accident_log` (
   `ID` int(11) NOT NULL,
-  `breakdown_type` text NOT NULL,
+  `breakdown_type` text CHARACTER SET utf8 NOT NULL,
   `timestamp` int(11) NOT NULL,
-  `breakdown_information` text NOT NULL
+  `breakdown_information` text CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `realtime_debug_log` (
   `breakdown_ID` int(11) NOT NULL,
   `timestamp` int(11) NOT NULL,
   `isSolve` tinyint(1) NOT NULL,
-  `solution_method` text NOT NULL
+  `solution_method` text CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -110,15 +110,15 @@ CREATE TABLE IF NOT EXISTS `realtime_station_data` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `realtime_user_lig`
+-- 表的结构 `realtime_user_log`
 --
 
-CREATE TABLE IF NOT EXISTS `realtime_user_lig` (
+CREATE TABLE IF NOT EXISTS `realtime_user_log` (
   `ID` int(11) NOT NULL,
   `login_time` int(11) NOT NULL,
   `logout_time` int(11) NOT NULL,
   `user_ID` int(11) NOT NULL,
-  `operation_list` text NOT NULL
+  `operation_list` text CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
