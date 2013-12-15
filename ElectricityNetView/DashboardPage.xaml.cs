@@ -160,12 +160,17 @@ namespace ElectricityNetView
             string filename = GetFileName(MapCenter.X, MapCenter.Y, MapZoom);
             if (File.Exists(filename))
             {
-                ImageFake.Source = new BitmapImage(new Uri(filename));
-                Canvas.SetLeft(ImageFake, 0);
-                Canvas.SetTop(ImageFake, 0);
+                try
+                {
+                    ImageFake.Source = new BitmapImage(new Uri(filename));
+                    Canvas.SetLeft(ImageFake, 0);
+                    Canvas.SetTop(ImageFake, 0);
+                }
+                catch (Exception) { }
             }
             else
             {
+                if(!BackGroundWorkerDownloadMap.IsBusy)
                 BackGroundWorkerDownloadMap.RunWorkerAsync();
             }
         }
@@ -181,7 +186,8 @@ namespace ElectricityNetView
             }
             else
             {
-                BackGroundWorkerDownloadMap.RunWorkerAsync();
+                if (!BackGroundWorkerDownloadMap.IsBusy)
+                    BackGroundWorkerDownloadMap.RunWorkerAsync();
             }
         }
 
@@ -232,6 +238,19 @@ namespace ElectricityNetView
             TemplateWebBrowserChart.JavaScript("pushdata", 1, RandomSeed.Next() % 30);
             TemplateWebBrowserChart.JavaScript("pushdata", 2, RandomSeed.Next() % 30);
             TemplateWebBrowserChart.JavaScript("pushdata", 3, RandomSeed.Next() % 30);
+        }
+        Point PointBefore=new Point(0,0);
+        private void CanvasMap_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point PointNow = e.GetPosition(e.Source as FrameworkElement);
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                double dx = (PointNow.X - PointBefore.X) * HDegreePerPx;
+                double dy = (PointNow.Y - PointBefore.Y) * VDegreePerPx;
+                SetCenter(MapCenter.X - dx, MapCenter.Y +dy);
+                PointBefore.Offset(dx, dy);
+            }
+            PointBefore = PointNow;
         }
 
     }
