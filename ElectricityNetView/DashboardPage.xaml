@@ -52,7 +52,7 @@
                     </ModelVisual3D>
                 </Viewport3D>
                 <Grid>
-                        <Canvas Name="CanvasMap" Width="1024" Height="1024" Margin="-512">
+                        <Canvas Name="CanvasMap" Width="1024" Height="1024" Margin="-512" MouseMove="CanvasMap_MouseMove">
                             <Image Name="ImageFake" Width="1024" Height="1024"/>
                         </Canvas>
                 </Grid>

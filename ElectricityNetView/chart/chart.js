@@ -52,6 +52,20 @@ $(document).ready(function () {
     };
     chart = new Highcharts.Chart(options);
 });
-function pushdata(series, data) {
+function pushdata(query,data1, data2) {
+    switch (query) {
+        case "newcol": {
+            break;
+        }
+        case "addelectstation":{
+
+            break;
+        }
+        case "switchgraph": {
+            
+            break;
+        }
+    }
     chart.series[series].addPoint(data);
 }
+
