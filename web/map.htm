@@ -1,0 +1,391 @@
+﻿<!DOCTYPEHTML>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <META content="IE=7.0000" http-equiv="X-UA-Compatible">
+<title>map</title>
+<style type="text/css">
+html{height:100%}
+body{height:100%;margin:0px;padding:0px}
+#container{height:100%}
+#left {
+        float: left;
+    }
+    #right {
+        float: right;
+    }
+    canvas{
+                        }
+    #infowindow {  
+   border:solid 1px #6699FF; background-color:#FFFFFF; white-space: nowrap; overflow:visible  
+}  
+.amap-info {  
+    width: auto;  
+}  
+
+
+</style>
+<script type="text/javascript"
+src="http://webapi.amap.com/maps?v=1.2&key=844a015f7fe6febc684a3b265954e989">
+</script>
+    
+
+<script src="C:\Users\pengfei\Documents\visual studio 2012\Projects\map\Chart.js"></script>
+<link href="C:\Users\pengfei\Documents\visual studio 2012\Projects\map\bootstrap.css" rel="stylesheet">
+
+   
+
+
+<script type="text/javascript">
+    var mapObj, toolBar, overView, X, Y,begin,showstation;
+    var station_number=34;
+    function mapInit() {
+        begin = false;
+        showstation = true;
+        mapObj = new AMap.Map("iCenter", {
+            //center: new AMap.LngLat(109.995117, 31.615966), //地图中心点
+            center: new AMap.LngLat(121.587753,31.646952),
+            level: 11  //地图显示的缩放级别 
+        });
+        //在地图中添加鹰眼插件  
+        mapObj.plugin(["AMap.OverView"], function () {
+            //加载鹰眼  
+            overView = new AMap.OverView({
+                visible: true //初始化隐藏鹰眼  
+            });
+            mapObj.addControl(overView);
+            overView.open();
+        });
+        mapObj.plugin(["AMap.ToolBar"], function () {
+            toolBar = new AMap.ToolBar(); //设置地位标记为自定义标记  
+            mapObj.addControl(toolBar);
+            AMap.event.addListener(toolBar, 'location', function callback(e) {
+                locationInfo = e.lnglat;
+            });
+        });
+
+        AMap.event.addListener(mapObj, "complete", completeEventHandler);
+        AMap.event.addListener(mapObj, "mousemove", getLnglat);
+
+    }
+</script>
+<script>
+    var name = new Array("南通海门变", "长兴站", "中双港站", "堡北站", "陈家镇站", "红星站", "南门站", "新海站", "长江站",
+          "竖河站", "汲浜站", "建设站", "大同站", "新河站","堡镇站","陈东站","森林站","湄洲站","崇安站","新闸站","跃进站","富盛站","上船站","明珠站","三星站"
+      ,"东风站","裕安站","前哨战","园区站","启隆站","前进站","港沿站","庙镇站","前卫站","五洨站");
+    var station_X = new Array(121.182, 121.697, 121.405, 121.631, 121.810, 121.372, 121.394, 121.297, 121.539
+        , 121.591, 121.761, 121.456, 121.489, 121.525,121.619,121.820,121.479,121.408,121.341,121.381,121.225,121.517,
+        121.555,121.412,121.288,121.491,121.831,121.870,121.396,121.456,121.600,121.657,121.350,121.512,121.664);
+
+    var station_Y = new Array(31.902, 31.390, 31.662, 31.572, 31.498, 31.787, 31.618, 31.819, 31.678, 31.602
+        , 31.533, 31.655, 31.627, 31.583,31.537,31.497,31.677,31.620,31.664,31.635,31.813,31.589,31.562,31.638,
+        31.744,31.712,31.524,31.526,31.636,31.775,31.643,31.589,31.714,31.719,31.540);
+    var level = new Array(2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+    var marker = new Array(35);
+    var info = new Array(35);
+    var infowindow = new Array(35);
+    //var show = new Array(1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+   
+    //地图图块加载完毕后执行函数  
+
+    function completeEventHandler() {
+       
+        //拉萨
+       
+        /*marker6 = new AMap.Circle({
+            map: mapObj,//要显示覆盖物的地图对象                  
+            center: new AMap.LngLat(91.010742, 29.726222),//圆心，基点                  
+            radius: 50000,//半径                  
+            strokeColor: "#ee2200",//线颜色  
+            strokeOpacity: 1,//线透明度                  
+            strokeWeight: 3,//线宽                  
+            fillColor: "#ee2200",//填充颜色                  
+            fillOpacity: 1//填充透明度                  
+        });
+        var info6 = [];
+        info6.push("<b>&nbsp;&nbsp;拉萨发电站</b>");
+        info6.push("&nbsp;&nbsp;电话 :  010-84107000   邮编 : 100102");
+        var inforWindow6 = new AMap.InfoWindow({
+            offset: new AMap.Pixel(0, 0),
+            content: info6.join("<br  />")
+        });
+        AMap.event.addListener(marker6, "click", function (e) {
+            inforWindow6.open(mapObj, marker6.getCenter());
+        });*/
+
+
+        /*------------------------崇明岛电站信息-----------------------------*/
+        /*
+1  南通海门变 121.182  31.902  220
+2  长兴站     121.697  31.390  220
+3  中双港站   121.405  31.662  220
+4  堡北站     121.631  31.572  220
+5  陈家镇站   121.810  31.498  220
+6  红星站     121.372  31.787  110
+7  南门站     121.394  31.618  110
+8  新海站     121.297  31.819  110
+9  长江站     121.539  31.678  110
+10 竖河站     121.591  31.602  110
+11 汲浜站     121.761  31.533  110
+12 建设站     121.456  31.655  35
+13 大同站     121.489  31.627  35
+14 新河站     121.525  31.583  35
+15 堡镇站     121.619  31.537  35
+16 陈东站     121.820  31.497  35
+17 森林站     121.479  31.677  35
+18 湄洲站     121.408  31.620  35
+19 崇安站     121.341  31.664  35
+20 新闸站     121.381  31.635  35
+21 跃进站     121.225  31.813  35
+22 富盛站     121.517  31.589  35
+23 上船站     121.555  31.562  35
+24 明珠站     121.412  31.638  35
+25 三星站     121.288  31.744  35
+26 东风站     121.491  31.712  35
+27 裕安站     121.831  31.524  35
+28 前哨站     121.870  31.526  35
+29 园区站     121.396  31.636  35
+30 启隆站     121.456  31.775  35
+31 前进站     121.600  31.643  35
+32 港沿站     121.657  31.589  35
+33 庙镇站     121.350  31.714  35
+34 前卫站     121.512  31.719  35
+35 五滧站     121.664  31.540  35
+        ------------------崇明岛建站开始-----------------------------*/
+        for (var i = 0; i <= station_number; i++) {
+            var position = new AMap.LngLat(station_X[i], station_Y[i]);
+            marker[i] = new AMap.Circle({
+                map: mapObj,//要显示覆盖物的地图对象                  
+                // center: new AMap.LngLat(station_X[i],station_Y[i]),//圆心，基点                  
+                center: position,
+                radius: 700,//半径                  
+                strokeColor: "#ee2200",//线颜色  
+                strokeOpacity: 1,//线透明度                  
+                strokeWeight: 3,//线宽                  
+                fillColor: "#ee2200",//填充颜色                  
+                fillOpacity: 1//填充透明度                  
+            });
+        }
+       
+       
+        //------------------崇明岛建站结束-----------------------------
+    }
+  
+     function startAnimation() {
+         if (!begin) {
+             begin = true;
+             document.getElementById("begin").value = "暂停";
+     
+            /* circle1.moveAlong(lineArr, 20000);
+             circle2.moveAlong(lineArr2, 20000);
+             circle3.moveAlong(lineArr3, 20000);
+             circle4.moveAlong(lineArr4, 20000);
+             circle5.moveAlong(lineArr5, 20000);*/
+          
+             
+         }
+         else {
+             begin = false;
+             document.getElementById("begin").value="开始";
+            // stopAnimation();
+         }
+     }
+   /*  function stopAnimation() {
+         circle1.stopMove();
+         circle2.stopMove();
+         circle3.stopMove();
+         circle4.stopMove();
+         circle5.stopMove();
+     
+     }*/
+        function getLnglat(e) {
+            document.getElementById("lngX").value = e.lnglat.getLng();
+             document.getElementById("latY").value = e.lnglat.getLat();
+            
+        }
+        function showall() {
+            if (showstation) {
+                showstation = false;
+                document.getElementById("show").value ="显示电站图标";
+                for (var i = 0; i <= station_number; i++) {
+                    circleoptions = {
+                        center: marker[i].getCenter(),// 新圆心位置  
+                        radius: 1, //新半径  
+                        strokeColor: "#FF9900", //线颜色  
+                        strokeOpacity: 0.8, //线透明度  
+                        strokeWeight: 0, //线粗细度  
+                        fillColor: "#FF9900", //填充颜色  
+                        fillOpacity: 0.9//填充透明度  
+                       
+                    };
+                    marker[i].setOptions(circleoptions);
+                }
+            }
+            else if(!showstation) {
+                showstation = true;
+                document.getElementById("show").value = "不显示电站图标";
+                for (var i = 0; i <= station_number; i++) {
+                    circleoptions = {
+                        center: marker[i].getCenter(),// 新圆心位置  
+                        radius: 1000, //新半径  
+                        strokeColor: "#FF9900", //线颜色  
+                        strokeOpacity: 0.8, //线透明度  
+                        strokeWeight: 0, //线粗细度  
+                        fillColor: "#FF9900", //填充颜色  
+                        fillOpacity: 0.9//填充透明度  
+
+                    };
+                    marker[i].setOptions(circleoptions);
+                }
+            }
+        }
+   
+</script>  
+</head>
+<body >
+          <div id="left">
+            
+              <canvas id="canvas" height="450" width="600"></canvas>
+              <script>
+
+
+                  var lineChartData = {
+                      labels: ["January", "February", "March", "April", "May", "June", "July"],
+                      datasets: [
+                              {
+                                  fillColor: "rgba(220,220,220,0.5)",
+                                  strokeColor: "rgba(220,220,220,1)",
+                                  pointColor: "rgba(220,220,220,1)",
+                                  pointStrokeColor: "#fff",
+                                  data: [65, 59, 90, 81, 56, 55, 40]
+                              },
+                              {
+                                  fillColor: "rgba(151,187,205,0.5)",
+                                  strokeColor: "rgba(151,187,205,1)",
+                                  pointColor: "rgba(151,187,205,1)",
+                                  pointStrokeColor: "#fff",
+                                  data: [28, 48, 40, 19, 96, 27, 100]
+                              }
+                      ]
+
+                  }
+
+
+                 // var myLine = new Chart(document.getElementById("canvas").getContext("2d")).Line(lineChartData);
+
+        </script>
+
+          </div>
+         
+             <button id="begin" type="button" class="btn btn-primary" onmousedown="startAnimation()" >开始</button>
+
+    <button type="button" class="btn btn-primary" onclick="alert('载入数据系统暂未开发')">载入</button>
+    <button id="show" type="button" class="btn btn-primary" onclick="showall()">电站图标消失</button>
+    
+
+    <font color="red">X:</font><input type="text" id="lngX" name="lngX"/>&nbsp;<font color="red">Y：</font><input type="text" id="latY" name="latY"/> 
+     
+        <div id="iCenter"> <script>mapInit();</script></div>   
+</body>
+</html>
+
+ <script>
+     var data_xian= 0;
+     function main() {
+        
+         setInterval('doit()', 2000);
+
+     }
+
+     function changecolor(marker_set, data,i) {
+         if (!showstation) return;
+         var position = new AMap.LngLat(station_X[i], station_Y[i]);
+         var circleoptions;
+         if (data <= 1000 && data >= 0) {
+
+             circleoptions = {
+                 center: position,// 新圆心位置  
+                 radius: level[i]*200+600, //新半径  
+                 strokeColor: "##669933", //线颜色  
+                 strokeOpacity: 0.8, //线透明度  
+                 strokeWeight: 0, //线粗细度  
+                 fillColor: "##669933", //填充颜色  
+                 fillOpacity: 0.8//填充透明度  
+             };
+
+
+         }
+         else if (data >= 1000 && data <= 3000) {
+
+             circleoptions = {
+                 center: position,// 新圆心位置  
+                 radius: level[i] * 200 + 600, //新半径  
+                 strokeColor: "#CCFF00", //线颜色  
+                 strokeOpacity: 0.8, //线透明度  
+                 strokeWeight: 0, //线粗细度  
+                 fillColor: "#CCFF00", //填充颜色  
+                 fillOpacity: 0.8//填充透明度  
+
+             };
+         }
+         else if (data >= 3000 && data <= 6500) {
+
+             circleoptions = {
+                 center: position,// 新圆心位置  
+                 radius: level[i] * 200 + 600, //新半径  
+                 strokeColor: "#FFFF00", //线颜色  
+                 strokeOpacity: 0.8, //线透明度  
+                 strokeWeight: 0, //线粗细度  
+                 fillColor: "#FFFF00", //填充颜色  
+                 fillOpacity: 0.8//填充透明度  
+
+             };
+         }
+         else if (data >= 6500 && data <= 7500) {
+
+             circleoptions = {
+                 center: position,// 新圆心位置  
+                 radius: level[i] * 200 + 600, //新半径  
+                 strokeColor: "#FF9900", //线颜色  
+                 strokeOpacity: 0.8, //线透明度  
+                 strokeWeight: 0, //线粗细度  
+                 fillColor: "#FF9900", //填充颜色  
+                 fillOpacity: 0.9//填充透明度  
+
+             };
+         }
+         else if (data >= 7500 && data <= 8000) {
+
+             circleoptions = {
+                 center: position,// 新圆心位置  
+                 radius: level[i] * 200 + 600, //新半径  
+                 strokeColor: "#FF0000", //线颜色  
+                 strokeOpacity: 0.8, //线透明度  
+                 strokeWeight: 0, //线粗细度  
+                 fillColor: "#FF0000", //填充颜色  
+                 fillOpacity: 1//填充透明度  
+
+             };
+         }
+         marker_set.setOptions(circleoptions);//更新圆属性
+     }
+
+     function doit() {
+
+         if (!begin)
+             return;
+         
+
+        
+             for (var i = 0; i<= station_number; i++) {
+                 var data_new =  Math.floor(Math.random() * 8001);
+                 changecolor(marker[i], data_new,i);
+             }
+         
+     }
+     main();
+
+
+ </script>
+
