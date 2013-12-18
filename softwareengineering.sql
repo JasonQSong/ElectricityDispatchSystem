@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2013 年 12 月 15 日 05:09
+-- 生成日期: 2013 年 12 月 18 日 13:47
 -- 服务器版本: 5.6.12-log
 -- PHP 版本: 5.4.12
 
@@ -29,13 +29,14 @@ USE `softwareengineering`;
 --
 
 CREATE TABLE IF NOT EXISTS `config_line_information` (
-  `ID` int(11) NOT NULL,
-  `line_name` text CHARACTER SET utf8 NOT NULL,
-  `start_station_ID` text CHARACTER SET utf8 NOT NULL,
-  `end_station_ID` text CHARACTER SET utf8 NOT NULL,
-  `voltage_level` int(11) NOT NULL,
-  `rated_current` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `LineName` varchar(20) NOT NULL,
+  `StationID_Start` int(11) NOT NULL,
+  `StationID_End` int(11) NOT NULL,
+  `VoltageLevel` varchar(20) NOT NULL,
+  `RatedCurrent` varchar(20) NOT NULL,
+  PRIMARY KEY (`ID`)
+);
 
 -- --------------------------------------------------------
 
@@ -44,14 +45,15 @@ CREATE TABLE IF NOT EXISTS `config_line_information` (
 --
 
 CREATE TABLE IF NOT EXISTS `config_station_information` (
-  `ID` int(11) NOT NULL,
-  `station_name` text CHARACTER SET utf8 NOT NULL,
-  `longitude` float NOT NULL,
-  `latitude` float NOT NULL,
-  `builded_time` int(11) NOT NULL,
-  `voltage_level` int(11) NOT NULL,
-  `installed_capacity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `StationName` varchar(50) NOT NULL,
+  `Longitude` double NOT NULL,
+  `Latitude` double NOT NULL,
+  `BuildTime` datetime NOT NULL,
+  `VoltageLevel` varchar(20) NOT NULL,
+  `InstallCapacity` varchar(20) NOT NULL,
+  PRIMARY KEY (`ID`)
+);
 
 -- --------------------------------------------------------
 
@@ -60,12 +62,12 @@ CREATE TABLE IF NOT EXISTS `config_station_information` (
 --
 
 CREATE TABLE IF NOT EXISTS `log_user` (
-  `ID` int(11) NOT NULL,
-  `login_time` int(11) NOT NULL,
-  `logout_time` int(11) NOT NULL,
-  `user_ID` int(11) NOT NULL,
-  `operation_list` text CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Time` datetime NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `Action` text NOT NULL,
+  PRIMARY KEY (`ID`)
+);
 
 -- --------------------------------------------------------
 
@@ -74,11 +76,12 @@ CREATE TABLE IF NOT EXISTS `log_user` (
 --
 
 CREATE TABLE IF NOT EXISTS `runtime_accident` (
-  `ID` int(11) NOT NULL,
-  `breakdown_type` text CHARACTER SET utf8 NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `breakdown_type` text NOT NULL,
   `timestamp` int(11) NOT NULL,
-  `breakdown_information` text CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `breakdown_information` text NOT NULL,
+  PRIMARY KEY (`ID`)
+);
 
 -- --------------------------------------------------------
 
@@ -87,11 +90,12 @@ CREATE TABLE IF NOT EXISTS `runtime_accident` (
 --
 
 CREATE TABLE IF NOT EXISTS `runtime_line_data` (
-  `ID` int(11) NOT NULL,
-  `line_ID` int(11) NOT NULL,
-  `load` int(11) NOT NULL,
-  `timestamp` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `LineID` int(11) NOT NULL,
+  `LoadQuantity` varchar(20) NOT NULL,
+  `Time` datetime NOT NULL,
+  PRIMARY KEY (`ID`)
+);
 
 -- --------------------------------------------------------
 
@@ -104,8 +108,8 @@ CREATE TABLE IF NOT EXISTS `runtime_repair` (
   `breakdown_ID` int(11) NOT NULL,
   `timestamp` int(11) NOT NULL,
   `isSolve` tinyint(1) NOT NULL,
-  `solution_method` text CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `solution_method` text NOT NULL
+);
 
 -- --------------------------------------------------------
 
@@ -114,12 +118,13 @@ CREATE TABLE IF NOT EXISTS `runtime_repair` (
 --
 
 CREATE TABLE IF NOT EXISTS `runtime_station_data` (
-  `ID` int(11) NOT NULL,
-  `station_ID` int(11) NOT NULL,
-  `active_power` int(11) NOT NULL,
-  `reactive_power` int(11) NOT NULL,
-  `time_stamp` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `StationID` int(11) NOT NULL,
+  `ActivePower` varchar(20) NOT NULL,
+  `ReactivePower` varchar(20) NOT NULL,
+  `Time` datetime NOT NULL,
+  PRIMARY KEY (`ID`)
+);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
