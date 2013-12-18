@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\GitHub\SoftwareEngineering\ElectricityNetView\obj\Debug\
+C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\
 ElectricityNetView
 none
 false
 DEBUG;TRACE
-E:\GitHub\SoftwareEngineering\ElectricityNetView\App.xaml
+C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\App.xaml
 3180705831
 5-1357052238
-12-1467908328
+121624176174
 141012385901
 DashboardPage.xaml;MainWindow.xaml;StartPage.xaml;
 
-True
+False
 
