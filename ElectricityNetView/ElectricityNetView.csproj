@@ -37,6 +37,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,8 +60,16 @@
     <Compile Include="DashboardPage.xaml.cs">
       <DependentUpon>DashboardPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Service References\ElectricityService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StationPage.xaml.cs">
+      <DependentUpon>StationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="TemplateWebBrowser.cs" />
     <Page Include="DashboardPage.xaml">
@@ -82,6 +92,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="StationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -101,11 +115,44 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="data\dss\cm_EXP_POWERS.CSV" />
+    <None Include="data\dss\cm_EXP_VOLTAGES.CSV" />
+    <None Include="data\dss\Generators.DSS" />
+    <None Include="data\dss\Lines.DSS" />
+    <None Include="data\dss\Loads.DSS" />
+    <None Include="data\dss\Master.dss" />
+    <None Include="data\dss\Run_cm.DSS" />
+    <None Include="data\dss\Transformers.DSS" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Service References\ElectricityService\ElectricityNetView.ElectricityService.ConfigLineInformation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElectricityService\ElectricityNetView.ElectricityService.ConfigStationInformation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElectricityService\ElectricityNetView.ElectricityService.LogUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElectricityService\ElectricityNetView.ElectricityService.RuntimeLineData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElectricityService\ElectricityNetView.ElectricityService.RuntimeStationData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ElectricityService\ElectricityService.wsdl" />
+    <None Include="Service References\ElectricityService\ElectricityService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ElectricityService\ElectricityService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ElectricityService\ElectricityService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -132,9 +179,56 @@
     <Content Include="chart\template.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="data\data\Line.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\data\HIS.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\data\G.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\data\config.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\data\BUS.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Resource Include="data\dss\cm1_Power_seq_kVA.txt" />
+    <Resource Include="data\dss\cm_Power_seq_kVA.txt" />
+    <Resource Include="data\dss\cm_VLN.Txt" />
+    <Resource Include="data\dss\cm_VLN_Node.Txt" />
+    <Resource Include="data\dss\L.txt" />
+    <Resource Include="data\dss\Loads.txt" />
+    <Resource Include="data\his\day0.txt" />
+    <Resource Include="data\his\day1.txt" />
+    <Resource Include="data\his\day10.txt" />
+    <Resource Include="data\his\day11.txt" />
+    <Resource Include="data\his\day12.txt" />
+    <Resource Include="data\his\day13.txt" />
+    <Resource Include="data\his\day14.txt" />
+    <Resource Include="data\his\day2.txt" />
+    <Resource Include="data\his\day3.txt" />
+    <Resource Include="data\his\day4.txt" />
+    <Resource Include="data\his\day5.txt" />
+    <Resource Include="data\his\day6.txt" />
+    <Resource Include="data\his\day7.txt" />
+    <Resource Include="data\his\day8.txt" />
+    <Resource Include="data\his\day9.txt" />
+    <Resource Include="data\his\extra.txt" />
+    <None Include="Service References\ElectricityService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ElectricityService\configuration.svcinfo" />
+    <None Include="Service References\ElectricityService\configuration91.svcinfo" />
+    <None Include="Service References\ElectricityService\ElectricityService.disco" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ElectricityService\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

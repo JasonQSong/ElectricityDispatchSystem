@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
-
 namespace ElectricityNetView
 {
     /// <summary>
@@ -251,6 +250,65 @@ namespace ElectricityNetView
                 PointBefore.Offset(dx, dy);
             }
             PointBefore = PointNow;
+        }
+
+        private void ButtonExampleBus_Click(object sender, RoutedEventArgs e)
+        {
+            /*
+            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+            if (ofd.ShowDialog() != System.Windows.Forms.DialogResult.Yes)
+                return;
+            FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
+             * */
+            List<ElectricityService.ConfigStationInformation> StationList = new List<ElectricityService.ConfigStationInformation>();
+            FileStream fs = new FileStream(@"data\data\BUS.txt", FileMode.Open);
+            StreamReader sr = new StreamReader(fs,Encoding.GetEncoding("gb2312"));
+            string line;
+            string[] paras;
+            while (!sr.EndOfStream)
+            {
+                line=sr.ReadLine();
+                paras = System.Text.RegularExpressions.Regex.Split(line, @"\s+");                
+                if (paras.Length == 5)
+                {
+                    ElectricityService.ConfigStationInformation tmpStation = new ElectricityService.ConfigStationInformation();
+                    tmpStation.StationName = paras[1];
+                    tmpStation.Longitude = double.Parse(paras[2]);
+                    tmpStation.Latitude = double.Parse(paras[3]);
+                    tmpStation.VoltageLevel = double.Parse(paras[4]);
+                    StationList.Add(tmpStation);
+                }
+            }
+
+            ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
+            try
+            {
+                foreach (ElectricityService.ConfigStationInformation tmpStation in StationList)
+                {
+                    esc.AddConfigStationInformation(tmpStation);
+                }
+                esc.Close();
+            }
+            catch (TimeoutException)
+            {
+                MessageBox.Show("服务器请求超时");
+                esc.Abort();
+            }
+
+        }
+        private void ButtonExampleLine_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonExampleG_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonExampleHis_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }

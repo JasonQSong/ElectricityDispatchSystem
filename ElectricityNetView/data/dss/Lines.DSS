@@ -1,0 +1,59 @@
+! Line definitions
+
+! Note, the line data are given in pu. However, the OpenDSS works in Ohms
+! The per unit values are converted to ohms using 100 MVA base and the voltage base of the first bus
+! No capacitance was defined for the 33 and 11 kv lines.
+
+New line.中堡线   Bus1=中双港站    Bus2=堡北站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1   
+New line.家堡线   Bus1=陈家镇站    Bus2=堡北站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1    
+New line.家长线   Bus1=陈家镇站    Bus2=长兴站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1 
+New line.海中线   Bus1=南通海门变  Bus2=中双港站   R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1   
+New line.中城线   Bus1=中双港站    Bus2=南门站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1  
+New line.中堡线2  Bus1=中双港站    Bus2=堡北站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1 
+New line.中红线   Bus1=中双港站    Bus2=红星站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1 
+New line.中新线   Bus1=中双港站    Bus2=新海站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.中南线   Bus1=中双港站    Bus2=南门站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1 
+New line.堡竖线   Bus1=堡北站      Bus2=竖河站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.堡长线   Bus1=堡北站      Bus2=长江站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.家汲线   Bus1=陈家镇站    Bus2=汲浜站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.家堡线2  Bus1=陈家镇站    Bus2=堡北站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.家长线2  Bus1=陈家镇站    Bus2=长兴站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.长江线   Bus1=长江站      Bus2=红星站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.崇海线   Bus1=南通海门变   Bus2=新海站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.双东线   Bus1=中双港站    Bus2=东风站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.双庙线   Bus1=中双港站    Bus2=庙镇站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.园区线   Bus1=中双港站    Bus2=园区站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.双明线   Bus1=中双港站    Bus2=明珠站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.双建线   Bus1=中双港站    Bus2=建设站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.双湄线   Bus1=中双港站    Bus2=湄洲站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.双同线   Bus1=中双港站    Bus2=大同站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.双南线   Bus1=中双港站    Bus2=南门站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.堡滧线   Bus1=堡北站      Bus2=五滧站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.堡镇线   Bus1=堡北站      Bus2=堡镇站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.堡船线   Bus1=堡北站      Bus2=上船站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.堡港线   Bus1=堡北站      Bus2=港沿站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.家裕线   Bus1=陈家镇站    Bus2=裕安站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.家前线   Bus1=陈家镇站    Bus2=前哨站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.家陈线   Bus1=陈家镇站    Bus2=陈东站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.南同线   Bus1=南门站      Bus2=大同站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.南湄线   Bus1=南门站      Bus2=湄洲站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.南明线   Bus1=南门站      Bus2=明珠站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.南园线   Bus1=南门站      Bus2=园区站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.南安线   Bus1=南门站      Bus2=崇安站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.轧钢线   Bus1=南门站      Bus2=新闸站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.海进线   Bus1=新海站      Bus2=跃进站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.星新线   Bus1=新海站      Bus2=红星站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.海三线   Bus1=新海站      Bus2=三星站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.红海线   Bus1=新海站      Bus2=红星站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.红庙站   Bus1=红星站      Bus2=庙镇站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.红风线   Bus1= 红星站     Bus2=东风站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.长卫线   Bus1=长江站      Bus2=前卫站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.长前线   Bus1=长江站      Bus2=前进站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.竖富线   Bus1=竖河站      Bus2=富盛站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.竖新线   Bus1=竖河站      Bus2=新河站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.汲滧线   Bus1=汲浜站      Bus2=五滧站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.建森线   Bus1=建设站      Bus2=森林站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.庙三线   Bus1=三星站      Bus2=庙镇站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.风启线   Bus1=东风站      Bus2=启隆站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+New line.港前线   Bus1=前进站      Bus2=港沿站    R1=0.0061 X1=0.0399 R0=0.0792 X0=0.21  C1=0.25  C0=0.06 Length=1
+

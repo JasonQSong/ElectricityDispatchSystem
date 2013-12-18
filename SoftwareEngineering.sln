@@ -2,10 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectricityNetView", "ElectricityNetView\ElectricityNetView.csproj", "{8E3C1DA3-6599-45E4-9243-2812E8751D31}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E563D1C9-6512-48A0-831A-DDC7DB74591E} = {E563D1C9-6512-48A0-831A-DDC7DB74591E}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfLocalHtmlTest", "WpfLocalHtmlTest\WpfLocalHtmlTest.csproj", "{B20644F1-627A-41BB-86E7-7EDC9D075646}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectricityWebServer", "ElectricityWebServer\ElectricityWebServer.csproj", "{96EFD6E8-7E0B-4533-8AFF-3391925B73FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectricityWcfService", "ElectricityWcfService\ElectricityWcfService.csproj", "{E563D1C9-6512-48A0-831A-DDC7DB74591E}"
 EndProject
@@ -23,10 +24,6 @@ Global
 		{B20644F1-627A-41BB-86E7-7EDC9D075646}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B20644F1-627A-41BB-86E7-7EDC9D075646}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B20644F1-627A-41BB-86E7-7EDC9D075646}.Release|Any CPU.Build.0 = Release|Any CPU
-		{96EFD6E8-7E0B-4533-8AFF-3391925B73FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96EFD6E8-7E0B-4533-8AFF-3391925B73FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96EFD6E8-7E0B-4533-8AFF-3391925B73FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96EFD6E8-7E0B-4533-8AFF-3391925B73FD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E563D1C9-6512-48A0-831A-DDC7DB74591E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E563D1C9-6512-48A0-831A-DDC7DB74591E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E563D1C9-6512-48A0-831A-DDC7DB74591E}.Release|Any CPU.ActiveCfg = Release|Any CPU
