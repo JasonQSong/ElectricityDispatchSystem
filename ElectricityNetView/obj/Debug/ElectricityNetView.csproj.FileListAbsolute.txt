@@ -24,3 +24,10 @@ C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineer
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\ElectricityNetView.g.resources
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\ElectricityNetView.Properties.Resources.resources
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\ElectricityNetView.csproj.GenerateResource.Cache
+C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\StationPage.baml
+C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\StationPage.g.cs
+C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\data\data\BUS.txt
+C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\data\data\Line.txt
+C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\data\data\HIS.txt
+C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\data\data\G.txt
+C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\data\data\config.txt

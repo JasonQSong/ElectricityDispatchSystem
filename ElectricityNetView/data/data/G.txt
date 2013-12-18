@@ -1,0 +1,3 @@
+New Generator.B1  Bus.B1  kV  132 kW 40000 Model 3 Vpu 1.045 Maxkvar 50000 Minkvar -40000 !  kvar 50000 
+New Generator.B2  Bus.B2  kV  132 kW 1     Model 3 Vpu 1.01  Maxkvar 40000 Minkvar -40000 !  kvar 37000 
+New Generator.B3  Bus.B3  kV  132 kW 1     Model 3 Vpu 1.01  Maxkvar 40000 Minkvar -10000 !  kvar 37300

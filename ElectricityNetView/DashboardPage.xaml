@@ -151,6 +151,12 @@
             <Grid Grid.Column="0" Grid.Row="2" Grid.RowSpan="2">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
+                        <Button Name="ButtonExampleBus" Click="ButtonExampleBus_Click">Bus</Button>
+                        <Button Name="ButtonExampleLine" Click="ButtonExampleLine_Click">Line</Button>
+                        <Button Name="ButtonExampleG" Click="ButtonExampleG_Click">G</Button>
+                        <Button Name="ButtonExampleHis" Click="ButtonExampleHis_Click">His</Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock>Center</TextBlock>
                         <TextBox Name="TextBoxCenter">121,31</TextBox>
                         <Button Name="ButtonParaCenter" Click="ButtonParaCenter_Click">Set</Button>
@@ -166,11 +172,6 @@
                         <TextBlock>PushChart</TextBlock>
                         <TextBox Name="TextBoxPushChart">121</TextBox>
                         <Button Name="ButtonPushChart" Click="ButtonPushChart_Click" >Set</Button>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>LoadEx</TextBlock>
-                        <TextBox Name="TextBoxLoadEx"></TextBox>
-                        <Button Name="ButtonLoadEx" Click="ButtonLoadEx_Click" >Load</Button>
                     </StackPanel>
                 </StackPanel>
             </Grid>

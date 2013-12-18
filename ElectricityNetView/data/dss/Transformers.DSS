@@ -1,0 +1,34 @@
+! Transformer definitions
+
+! Since no transformer rating data exist in the Common Data Forma
+! all transformer are defined as begin 100 MVA, the system base
+! Thus, the conversion of impedances is simple: just multiply by 100 to get percent
+
+! The tap in the original data is assumed to apply to the first winding.
+
+! Transformers are modeled with their actual turns ratios
+
+! The OpenDSS defaults to Yg-Yg connection. Since we don't have to worry about
+! floating Delta windings, the PPM_antifloat property is set to 0. 
+
+! All transformer branches are defined with R=0. This is accomplished by
+! setting %Loadloss=0
+
+! Although OpenDSS can handle 3-winding transformers the model here
+! follows the model in the old data set by defining 3 separate transformers to an
+! intermediate bus with a 1 kV voltage rating.  Since there is nothing connected
+! there, you could actually use any voltage you wish.
+
+New Transformer.1-4 kVAs=[100000 100000] XHL=20.8 PPM=0 windings=3
+~ Wdg=1 R=0 kV=220 Bus=南通海门变 Tap=0.978
+~ Wdg=2 R=0 kV=35 Bus=中双港站
+~ Wdg=3 R=0 kV=110 Bus=堡北站
+~ %loadloss=0
+New Transformer.2-7 kVAs=[100000 100000] XHL=55.6 PPM=0 windings=3
+~ Wdg=1 R=0 kV=132 Bus=B2 Tap=0.969
+~ Wdg=2 R=0 kV=33 Bus=B7
+~ %loadloss=0
+New Transformer.3-9 kVAs=[100000 100000] XHL=20.8 PPM=0 windings=3
+~ Wdg=1 R=0 kV=132 Bus=B3 Tap=1
+~ Wdg=2 R=0 kV=33 Bus=B9
+~ %loadloss=0
