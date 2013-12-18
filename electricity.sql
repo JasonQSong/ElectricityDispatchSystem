@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2013 年 12 月 18 日 16:01
+-- 生成日期: 2013 年 12 月 18 日 17:01
 -- 服务器版本: 5.6.12-log
 -- PHP 版本: 5.4.12
 
@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `config_equipment` (
   `LifeTime` datetime NOT NULL COMMENT '该设备的寿命',
   `AccidentTimes` int(11) NOT NULL COMMENT '该设备发生故障的次数',
   `PersonID_InCharge` int(11) NOT NULL COMMENT '该设备的负责人',
+  `StationID` int(11) NOT NULL COMMENT '设备所属的变电站的ID',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
