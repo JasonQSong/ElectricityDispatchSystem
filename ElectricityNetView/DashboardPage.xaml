@@ -79,10 +79,10 @@
                         <RowDefinition Height="2*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Button Name="ButtonPredictGrey" Grid.Column="1" Grid.Row="1" Content="灰度预测" Margin="10"/>
-                    <Button Grid.Column="1" Grid.Row="2" Content="蓝度预测" Margin="10"/>
-                    <Button Grid.Column="1" Grid.Row="3" Content="黑度预测" Margin="10"/>
-                    <Button Grid.Column="1" Grid.Row="4" Content="绿度预测" Margin="10"/>
+                    <Button Name="ButtonPredictGrey" Grid.Column="1" Grid.Row="1" Content="灰度预测" Margin="3"/>
+                    <Button Grid.Column="1" Grid.Row="2" Content="蓝度预测" Margin="3"/>
+                    <Button Grid.Column="1" Grid.Row="3" Content="黑度预测" Margin="3"/>
+                    <Button Grid.Column="1" Grid.Row="4" Content="绿度预测" Margin="3"/>
                     <TextBlock Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Text="负&#13;荷&#13;预&#13;测" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Grid>
                 <Grid Grid.Column="1">
@@ -99,10 +99,10 @@
                         <RowDefinition Height="2*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Button Name="ButtonDisplayNonproduct" Grid.Column="1" Grid.Row="1" Content="显示无功功率" Click="ButtonDisplayNonproduct_Click"/>
-                    <Button Grid.Column="1" Grid.Row="2" Content="显示有功功率"/>
-                    <Button Grid.Column="1" Grid.Row="3" Content="总功率"/>
-                    <Button Grid.Column="1" Grid.Row="4" Content="功率文字输出"/>
+                    <Button Name="ButtonDisplayNonproduct" Grid.Column="1" Grid.Row="1" Content="显示无功功率" Click="ButtonDisplayNonproduct_Click" Margin="3"/>
+                    <Button Grid.Column="1" Grid.Row="2" Content="显示有功功率" Margin="3"/>
+                    <Button Grid.Column="1" Grid.Row="3" Content="总功率" Margin="3"/>
+                    <Button Grid.Column="1" Grid.Row="4" Content="功率文字输出" Margin="3"/>
                     <TextBlock Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Text="显&#13;示&#13;模&#13;式" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Grid>
             </Grid>
@@ -166,6 +166,11 @@
                         <TextBlock>PushChart</TextBlock>
                         <TextBox Name="TextBoxPushChart">121</TextBox>
                         <Button Name="ButtonPushChart" Click="ButtonPushChart_Click" >Set</Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>LoadEx</TextBlock>
+                        <TextBox Name="TextBoxLoadEx"></TextBox>
+                        <Button Name="ButtonLoadEx" Click="ButtonLoadEx_Click" >Load</Button>
                     </StackPanel>
                 </StackPanel>
             </Grid>

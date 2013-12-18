@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e97dda26-516a-4f71-9ad8-8f9f7aafa201" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:44804/ElectricityService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ElectricityService.xsd" MetadataType="Schema" ID="9b959e38-e7ff-419d-9a27-9827f8e443a8" SourceId="1" SourceUrl="http://localhost:44804/ElectricityService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ElectricityService1.xsd" MetadataType="Schema" ID="5c02b237-c06c-4517-968e-5d1e357702ab" SourceId="1" SourceUrl="http://localhost:44804/ElectricityService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ElectricityService.disco" MetadataType="Disco" ID="f989a2b0-7439-4ee0-985d-ce33173ef507" SourceId="1" SourceUrl="http://localhost:44804/ElectricityService.svc?disco" />
+    <MetadataFile FileName="ElectricityService2.xsd" MetadataType="Schema" ID="28b22b0f-614e-4b38-bdf9-4af3f66596f4" SourceId="1" SourceUrl="http://localhost:44804/ElectricityService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ElectricityService.wsdl" MetadataType="Wsdl" ID="b75d41a4-2179-4a32-bee8-00e84a798acb" SourceId="1" SourceUrl="http://localhost:44804/ElectricityService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ElectricityService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:44804/ElectricityService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:44804/ElectricityService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:44804/ElectricityService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ElectricityWcfService" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IElectricityService_AddLogUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddLogUser" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_AddLogUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddLogUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_AddConfigLineInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddConfigLineInformation" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_AddConfigLineInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddConfigLineInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_AddConfigStationInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddConfigStationInformation" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_AddConfigStationInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddConfigStationInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_AddRuntimeLineData_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddRuntimeLineData" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_AddRuntimeLineData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddRuntimeLineDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_AddRuntimeStationData_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddRuntimeStationData" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_AddRuntimeStationData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddRuntimeStationDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_FindLogUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindLogUser" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_FindLogUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindLogUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_FindConfigLineInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindConfigLineInformation" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_FindConfigLineInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindConfigLineInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_FindConfigStationInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindConfigStationInformation" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_FindConfigStationInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindConfigStationInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_FindRuntimeLineData_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindRuntimeLineData" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_FindRuntimeLineData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindRuntimeLineDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_FindRuntimeStationData_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindRuntimeStationData" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_FindRuntimeStationData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindRuntimeStationDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_StationAlert_InputMessage">
+    <wsdl:part name="parameters" element="tns:StationAlert" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_StationAlert_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StationAlertResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IElectricityService">
+    <wsdl:operation name="AddLogUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/AddLogUser" message="tns:IElectricityService_AddLogUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/AddLogUserResponse" message="tns:IElectricityService_AddLogUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddConfigLineInformation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/AddConfigLineInformation" message="tns:IElectricityService_AddConfigLineInformation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/AddConfigLineInformationResponse" message="tns:IElectricityService_AddConfigLineInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddConfigStationInformation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/AddConfigStationInformation" message="tns:IElectricityService_AddConfigStationInformation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/AddConfigStationInformationResponse" message="tns:IElectricityService_AddConfigStationInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddRuntimeLineData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/AddRuntimeLineData" message="tns:IElectricityService_AddRuntimeLineData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/AddRuntimeLineDataResponse" message="tns:IElectricityService_AddRuntimeLineData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddRuntimeStationData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/AddRuntimeStationData" message="tns:IElectricityService_AddRuntimeStationData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/AddRuntimeStationDataResponse" message="tns:IElectricityService_AddRuntimeStationData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindLogUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/FindLogUser" message="tns:IElectricityService_FindLogUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/FindLogUserResponse" message="tns:IElectricityService_FindLogUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindConfigLineInformation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/FindConfigLineInformation" message="tns:IElectricityService_FindConfigLineInformation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/FindConfigLineInformationResponse" message="tns:IElectricityService_FindConfigLineInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindConfigStationInformation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/FindConfigStationInformation" message="tns:IElectricityService_FindConfigStationInformation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/FindConfigStationInformationResponse" message="tns:IElectricityService_FindConfigStationInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindRuntimeLineData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/FindRuntimeLineData" message="tns:IElectricityService_FindRuntimeLineData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/FindRuntimeLineDataResponse" message="tns:IElectricityService_FindRuntimeLineData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindRuntimeStationData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/FindRuntimeStationData" message="tns:IElectricityService_FindRuntimeStationData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/FindRuntimeStationDataResponse" message="tns:IElectricityService_FindRuntimeStationData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StationAlert">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/StationAlert" message="tns:IElectricityService_StationAlert_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/StationAlertResponse" message="tns:IElectricityService_StationAlert_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IElectricityService" type="tns:IElectricityService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddLogUser">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/AddLogUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddConfigLineInformation">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/AddConfigLineInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddConfigStationInformation">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/AddConfigStationInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddRuntimeLineData">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/AddRuntimeLineData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddRuntimeStationData">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/AddRuntimeStationData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindLogUser">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/FindLogUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindConfigLineInformation">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/FindConfigLineInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindConfigStationInformation">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/FindConfigStationInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindRuntimeLineData">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/FindRuntimeLineData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindRuntimeStationData">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/FindRuntimeStationData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StationAlert">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/StationAlert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ElectricityService">
+    <wsdl:port name="BasicHttpBinding_IElectricityService" binding="tns:BasicHttpBinding_IElectricityService">
+      <soap:address location="http://localhost:44804/ElectricityService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
