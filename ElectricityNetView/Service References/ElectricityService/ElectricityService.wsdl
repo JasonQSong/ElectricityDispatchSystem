@@ -55,6 +55,12 @@
   <wsdl:message name="IElectricityService_FindConfigStationInformation_OutputMessage">
     <wsdl:part name="parameters" element="tns:FindConfigStationInformationResponse" />
   </wsdl:message>
+  <wsdl:message name="IElectricityService_FindConfigStationInformationByStationName_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindConfigStationInformationByStationName" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_FindConfigStationInformationByStationName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindConfigStationInformationByStationNameResponse" />
+  </wsdl:message>
   <wsdl:message name="IElectricityService_FindRuntimeLineData_InputMessage">
     <wsdl:part name="parameters" element="tns:FindRuntimeLineData" />
   </wsdl:message>
@@ -105,6 +111,10 @@
     <wsdl:operation name="FindConfigStationInformation">
       <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/FindConfigStationInformation" message="tns:IElectricityService_FindConfigStationInformation_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/FindConfigStationInformationResponse" message="tns:IElectricityService_FindConfigStationInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindConfigStationInformationByStationName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/FindConfigStationInformationByStationName" message="tns:IElectricityService_FindConfigStationInformationByStationName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/FindConfigStationInformationByStationNameResponse" message="tns:IElectricityService_FindConfigStationInformationByStationName_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="FindRuntimeLineData">
       <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/FindRuntimeLineData" message="tns:IElectricityService_FindRuntimeLineData_InputMessage" />
@@ -186,6 +196,15 @@
     </wsdl:operation>
     <wsdl:operation name="FindConfigStationInformation">
       <soap:operation soapAction="http://tempuri.org/IElectricityService/FindConfigStationInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindConfigStationInformationByStationName">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/FindConfigStationInformationByStationName" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

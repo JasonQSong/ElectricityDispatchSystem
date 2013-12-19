@@ -57,6 +57,11 @@ namespace ElectricityWcfService
             DatabaseConnector dc = new DatabaseConnector();
             return dc.FindConfigStationInformation(ID);
         }
+        public ConfigStationInformation FindConfigStationInformationByStationName(string StationName)
+        {
+            DatabaseConnector dc = new DatabaseConnector();
+            return dc.FindConfigStationInformationByStationName(StationName);
+        }
         public RuntimeLineData FindRuntimeLineData(int ID) 
         { 
             DatabaseConnector dc = new DatabaseConnector();

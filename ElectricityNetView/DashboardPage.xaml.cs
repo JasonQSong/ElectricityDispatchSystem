@@ -34,17 +34,18 @@ namespace ElectricityNetView
             HDegreePerPx = 0.000575;
             VDegreePerPx = 0.000495;
             TemplateWebBrowserChart = new TemplateWebBrowser(WebBrowserChart);
+            BackGroundWorkerDownloadMap.RunWorkerCompleted += BackGroundWorkerDownloadMap_RunWorkerCompleted;
+            BackGroundWorkerDownloadMap.DoWork += BackGroundWorkerDownloadMap_DoWork;
             TimerRefresh = new System.Windows.Threading.DispatcherTimer();
             TimerRefresh.Tick += TimerRefresh_Tick;
-            BackGroundWorkerDownloadMap.DoWork += BackGroundWorkerDownloadMap_DoWork;
-            BackGroundWorkerDownloadMap.RunWorkerCompleted += BackGroundWorkerDownloadMap_RunWorkerCompleted;
+            TimerRefresh.Interval = TimeSpan.FromSeconds(1);
+            TimerRefresh.Start();
         }
 
         Random RandomSeed = new Random();
         void TimerRefresh_Tick(object sender, EventArgs e)
         {
-
-            TemplateWebBrowserChart.JavaScript("pushdata", 0, RandomSeed.Next() % 30);
+            TemplateWebBrowserChart.JavaScript("pushdata", DateTime.Now.ToString(), RandomSeed.Next() % 15, 15 + RandomSeed.Next() % 15);
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -150,10 +151,10 @@ namespace ElectricityNetView
         private void SetCenter(double x, double y)
         {
             double ImageLeft = Canvas.GetLeft(ImageFake);
-            ImageLeft += ( MapCenter.X-x) / HDegreePerPx;
+            ImageLeft += (MapCenter.X - x) / HDegreePerPx;
             Canvas.SetLeft(ImageFake, ImageLeft);
             double ImageTop = Canvas.GetTop(ImageFake);
-            ImageTop += (y-MapCenter.Y ) / VDegreePerPx;
+            ImageTop += (y - MapCenter.Y) / VDegreePerPx;
             Canvas.SetTop(ImageFake, ImageTop);
             MapCenter = new Point(x, y);
             string filename = GetFileName(MapCenter.X, MapCenter.Y, MapZoom);
@@ -169,8 +170,8 @@ namespace ElectricityNetView
             }
             else
             {
-                if(!BackGroundWorkerDownloadMap.IsBusy)
-                BackGroundWorkerDownloadMap.RunWorkerAsync();
+                if (!BackGroundWorkerDownloadMap.IsBusy)
+                    BackGroundWorkerDownloadMap.RunWorkerAsync();
             }
         }
         System.ComponentModel.BackgroundWorker BackGroundWorkerDownloadMap = new System.ComponentModel.BackgroundWorker();
@@ -238,7 +239,7 @@ namespace ElectricityNetView
             TemplateWebBrowserChart.JavaScript("pushdata", 2, RandomSeed.Next() % 30);
             TemplateWebBrowserChart.JavaScript("pushdata", 3, RandomSeed.Next() % 30);
         }
-        Point PointBefore=new Point(0,0);
+        Point PointBefore = new Point(0, 0);
         private void CanvasMap_MouseMove(object sender, MouseEventArgs e)
         {
             Point PointNow = e.GetPosition(e.Source as FrameworkElement);
@@ -246,7 +247,7 @@ namespace ElectricityNetView
             {
                 double dx = (PointNow.X - PointBefore.X) * HDegreePerPx;
                 double dy = (PointNow.Y - PointBefore.Y) * VDegreePerPx;
-                SetCenter(MapCenter.X - dx, MapCenter.Y +dy);
+                SetCenter(MapCenter.X - dx, MapCenter.Y + dy);
                 PointBefore.Offset(dx, dy);
             }
             PointBefore = PointNow;
@@ -254,35 +255,34 @@ namespace ElectricityNetView
 
         private void ButtonExampleBus_Click(object sender, RoutedEventArgs e)
         {
-            /*
-            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
-            if (ofd.ShowDialog() != System.Windows.Forms.DialogResult.Yes)
-                return;
-            FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
-             * */
-            List<ElectricityService.ConfigStationInformation> StationList = new List<ElectricityService.ConfigStationInformation>();
-            FileStream fs = new FileStream(@"data\data\BUS.txt", FileMode.Open);
-            StreamReader sr = new StreamReader(fs,Encoding.GetEncoding("gb2312"));
-            string line;
-            string[] paras;
-            while (!sr.EndOfStream)
-            {
-                line=sr.ReadLine();
-                paras = System.Text.RegularExpressions.Regex.Split(line, @"\s+");                
-                if (paras.Length == 5)
-                {
-                    ElectricityService.ConfigStationInformation tmpStation = new ElectricityService.ConfigStationInformation();
-                    tmpStation.StationName = paras[1];
-                    tmpStation.Longitude = double.Parse(paras[2]);
-                    tmpStation.Latitude = double.Parse(paras[3]);
-                    tmpStation.VoltageLevel = double.Parse(paras[4]);
-                    StationList.Add(tmpStation);
-                }
-            }
-
             ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
             try
             {
+                System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+                ofd.InitialDirectory = System.IO.Path.GetFullPath(@".\data\data");
+                ofd.FileName = @"BUS.txt";
+                System.Windows.Forms.DialogResult dr = ofd.ShowDialog();
+                if (dr != System.Windows.Forms.DialogResult.OK)
+                    return;
+                FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
+                List<ElectricityService.ConfigStationInformation> StationList = new List<ElectricityService.ConfigStationInformation>();
+                StreamReader sr = new StreamReader(fs, Encoding.GetEncoding("gb2312"));
+                string line;
+                string[] paras;
+                while (!sr.EndOfStream)
+                {
+                    line = sr.ReadLine();
+                    paras = System.Text.RegularExpressions.Regex.Split(line, @"\s+");
+                    if (paras.Length == 5)
+                    {
+                        ElectricityService.ConfigStationInformation tmpStation = new ElectricityService.ConfigStationInformation();
+                        tmpStation.StationName = paras[1];
+                        tmpStation.Longitude = double.Parse(paras[2]);
+                        tmpStation.Latitude = double.Parse(paras[3]);
+                        tmpStation.VoltageLevel = double.Parse(paras[4]);
+                        StationList.Add(tmpStation);
+                    }
+                }
                 foreach (ElectricityService.ConfigStationInformation tmpStation in StationList)
                 {
                     esc.AddConfigStationInformation(tmpStation);
@@ -294,23 +294,101 @@ namespace ElectricityNetView
                 MessageBox.Show("服务器请求超时");
                 esc.Abort();
             }
-
         }
         private void ButtonExampleLine_Click(object sender, RoutedEventArgs e)
         {
-
+            ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
+            try
+            {
+                System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+                ofd.InitialDirectory = System.IO.Path.GetFullPath(@".\data\data");
+                ofd.FileName = @"Line.txt";
+                System.Windows.Forms.DialogResult dr = ofd.ShowDialog();
+                if (dr != System.Windows.Forms.DialogResult.OK)
+                    return;
+                FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
+                List<ElectricityService.ConfigLineInformation> LineList = new List<ElectricityService.ConfigLineInformation>();
+                StreamReader sr = new StreamReader(fs, Encoding.GetEncoding("gb2312"));
+                string line;
+                string[] paras;
+                while (!sr.EndOfStream)
+                {
+                    line = sr.ReadLine();
+                    paras = System.Text.RegularExpressions.Regex.Split(line, @"\s+");
+                    if (paras.Length == 19)
+                    {
+                        int StationID_Start=esc.FindConfigStationInformationByStationName(paras[1]).ID;
+                        int StationID_End=esc.FindConfigStationInformationByStationName(paras[2]).ID;
+                        ElectricityService.ConfigLineInformation tmpLine = new ElectricityService.ConfigLineInformation();
+                        tmpLine.LineName = paras[0];
+                        tmpLine.StationID_Start = StationID_Start;
+                        tmpLine.StationID_End = StationID_End;
+                        tmpLine.VoltageLevel = double.Parse(paras[3]);
+                        LineList.Add(tmpLine);
+                    }
+                }
+                foreach (ElectricityService.ConfigLineInformation tmpLine in LineList)
+                {
+                    esc.AddConfigLineInformation(tmpLine);
+                }
+                esc.Close();
+            }
+            catch (TimeoutException)
+            {
+                MessageBox.Show("服务器请求超时");
+                esc.Abort();
+            }
         }
 
-        private void ButtonExampleG_Click(object sender, RoutedEventArgs e)
+        private void ButtonExampleDay_Click(object sender, RoutedEventArgs e)
         {
-
+            DateTime TimeReady = DatePickerExampleDay.SelectedDate ?? DateTime.Now;
+            ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
+            try
+            {
+                System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+                ofd.InitialDirectory = System.IO.Path.GetFullPath(@".\data\his");
+                ofd.FileName = @"day.txt";
+                System.Windows.Forms.DialogResult dr = ofd.ShowDialog();
+                if (dr != System.Windows.Forms.DialogResult.OK)
+                    return;
+                FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
+                List<ElectricityService.RuntimeStationData> DataList = new List<ElectricityService.RuntimeStationData>();
+                StreamReader sr = new StreamReader(fs, Encoding.GetEncoding("gb2312"));
+                string line;
+                string[] paras;
+                int istationid=1,jrecordid=0;
+                while (!sr.EndOfStream)
+                {
+                    line = sr.ReadLine();
+                    paras = System.Text.RegularExpressions.Regex.Split(line, @"\s+");
+                    if (paras.Length == 3)
+                    {
+                        ElectricityService.RuntimeStationData tmpData = new ElectricityService.RuntimeStationData()                {
+                            StationID=istationid,
+                            ActivePower=double.Parse(paras[0]),
+                            ReactivePower=double.Parse(paras[1]),
+                            Time=TimeReady+TimeSpan.FromMinutes(15*jrecordid)
+                        };
+                        jrecordid++;
+                        if(jrecordid>=96){
+                            jrecordid=0;
+                            istationid++;
+                        }
+                    }
+                }
+                foreach (ElectricityService.RuntimeStationData tmpData in DataList)
+                {
+                    esc.AddRuntimeStationData(tmpData);
+                }
+                esc.Close();
+            }
+            catch (TimeoutException)
+            {
+                MessageBox.Show("服务器请求超时");
+                esc.Abort();
+            }
         }
-
-        private void ButtonExampleHis_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
     }
     public class ElectricStation
     {

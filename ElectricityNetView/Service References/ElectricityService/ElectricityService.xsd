@@ -113,6 +113,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="FindConfigStationInformationByStationName">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StationName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FindConfigStationInformationByStationNameResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindConfigStationInformationByStationNameResult" nillable="true" type="q9:ConfigStationInformation" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="FindRuntimeLineData">
     <xs:complexType>
       <xs:sequence>
@@ -123,7 +137,7 @@
   <xs:element name="FindRuntimeLineDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindRuntimeLineDataResult" nillable="true" type="q9:RuntimeLineData" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindRuntimeLineDataResult" nillable="true" type="q10:RuntimeLineData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -137,7 +151,7 @@
   <xs:element name="FindRuntimeStationDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindRuntimeStationDataResult" nillable="true" type="q10:RuntimeStationData" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindRuntimeStationDataResult" nillable="true" type="q11:RuntimeStationData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

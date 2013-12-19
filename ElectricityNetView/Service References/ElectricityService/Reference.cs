@@ -481,6 +481,9 @@ namespace ElectricityNetView.ElectricityService {
         private int IDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double ReactivePowerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int StationIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -518,6 +521,19 @@ namespace ElectricityNetView.ElectricityService {
                 if ((this.IDField.Equals(value) != true)) {
                     this.IDField = value;
                     this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double ReactivePower {
+            get {
+                return this.ReactivePowerField;
+            }
+            set {
+                if ((this.ReactivePowerField.Equals(value) != true)) {
+                    this.ReactivePowerField = value;
+                    this.RaisePropertyChanged("ReactivePower");
                 }
             }
         }
@@ -609,6 +625,14 @@ namespace ElectricityNetView.ElectricityService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/FindConfigStationInformation", ReplyAction="http://tempuri.org/IElectricityService/FindConfigStationInformationResponse")]
         System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.ConfigStationInformation> FindConfigStationInformationAsync(int ID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/FindConfigStationInformationByStationName", ReplyAction="http://tempuri.org/IElectricityService/FindConfigStationInformationByStationNameR" +
+            "esponse")]
+        ElectricityNetView.ElectricityService.ConfigStationInformation FindConfigStationInformationByStationName(string StationName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/FindConfigStationInformationByStationName", ReplyAction="http://tempuri.org/IElectricityService/FindConfigStationInformationByStationNameR" +
+            "esponse")]
+        System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.ConfigStationInformation> FindConfigStationInformationByStationNameAsync(string StationName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/FindRuntimeLineData", ReplyAction="http://tempuri.org/IElectricityService/FindRuntimeLineDataResponse")]
         ElectricityNetView.ElectricityService.RuntimeLineData FindRuntimeLineData(int ID);
@@ -718,6 +742,14 @@ namespace ElectricityNetView.ElectricityService {
         
         public System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.ConfigStationInformation> FindConfigStationInformationAsync(int ID) {
             return base.Channel.FindConfigStationInformationAsync(ID);
+        }
+        
+        public ElectricityNetView.ElectricityService.ConfigStationInformation FindConfigStationInformationByStationName(string StationName) {
+            return base.Channel.FindConfigStationInformationByStationName(StationName);
+        }
+        
+        public System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.ConfigStationInformation> FindConfigStationInformationByStationNameAsync(string StationName) {
+            return base.Channel.FindConfigStationInformationByStationNameAsync(StationName);
         }
         
         public ElectricityNetView.ElectricityService.RuntimeLineData FindRuntimeLineData(int ID) {

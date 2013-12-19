@@ -200,22 +200,54 @@
     <Resource Include="data\dss\cm_VLN_Node.Txt" />
     <Resource Include="data\dss\L.txt" />
     <Resource Include="data\dss\Loads.txt" />
-    <Resource Include="data\his\day0.txt" />
-    <Resource Include="data\his\day1.txt" />
-    <Resource Include="data\his\day10.txt" />
-    <Resource Include="data\his\day11.txt" />
-    <Resource Include="data\his\day12.txt" />
-    <Resource Include="data\his\day13.txt" />
-    <Resource Include="data\his\day14.txt" />
-    <Resource Include="data\his\day2.txt" />
-    <Resource Include="data\his\day3.txt" />
-    <Resource Include="data\his\day4.txt" />
-    <Resource Include="data\his\day5.txt" />
-    <Resource Include="data\his\day6.txt" />
-    <Resource Include="data\his\day7.txt" />
-    <Resource Include="data\his\day8.txt" />
-    <Resource Include="data\his\day9.txt" />
-    <Resource Include="data\his\extra.txt" />
+    <Content Include="data\his\day0.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day10.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day11.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day12.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day13.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day14.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day3.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day4.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day5.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day6.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day7.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day8.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\day9.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\his\extra.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Service References\ElectricityService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

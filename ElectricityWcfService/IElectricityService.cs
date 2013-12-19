@@ -30,6 +30,8 @@ namespace ElectricityWcfService
         [OperationContract]
         ConfigStationInformation FindConfigStationInformation(int ID);
         [OperationContract]
+        ConfigStationInformation FindConfigStationInformationByStationName(string StationName);
+        [OperationContract]
         RuntimeLineData FindRuntimeLineData(int ID);
         [OperationContract]
         RuntimeStationData FindRuntimeStationData(int ID);
@@ -225,6 +227,7 @@ namespace ElectricityWcfService
             get { return _ActivePower; }
             set { _ActivePower = value; }
         }
+        [DataMember]
         public double ReactivePower
         {
             get { return _ReactivePower; }

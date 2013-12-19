@@ -21,7 +21,7 @@ namespace ElectricityWcfService
         {
             if (conn != null)
                 return;
-            string connStr = "server=localhost;user=root;database=softwareengineering;port=3306;password=;";
+            string connStr = "server=localhost;user=root;database=electricity;port=3306;password=;charset=utf8";
             conn = new MySqlConnection(connStr);
             conn.Open();
         }
@@ -117,7 +117,28 @@ namespace ElectricityWcfService
             ConfigStationInformation Record = new ConfigStationInformation()
             {
                 ID = (int)rdr["ID"],
-                StationName = (string)rdr["LineName"],
+                StationName = (string)rdr["StationName"],
+                Longitude = double.Parse((string)rdr["Longitude"]),
+                Latitude = double.Parse((string)rdr["Latitude"]),
+                BuildTime = (DateTime)rdr["BuildTime"],
+                VoltageLevel = double.Parse((string)rdr["VoltageLevel"]),
+                InstallCapacity = double.Parse((string)rdr["InstallCapacity"])
+            };
+            rdr.Close();
+            return Record;
+        }
+        public ConfigStationInformation FindConfigStationInformationByStationName(string StationName)
+        {
+            connect();
+            string sql = String.Format("SELECT * FROM `config_station_information` WHERE `StationName`='{0}';",
+                StationName);
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            rdr.Read();
+            ConfigStationInformation Record = new ConfigStationInformation()
+            {
+                ID = (int)rdr["ID"],
+                StationName = (string)rdr["StationName"],
                 Longitude = double.Parse((string)rdr["Longitude"]),
                 Latitude = double.Parse((string)rdr["Latitude"]),
                 BuildTime = (DateTime)rdr["BuildTime"],
@@ -130,7 +151,7 @@ namespace ElectricityWcfService
         public RuntimeLineData FindRuntimeLineData(int ID)
         {
             connect();
-            string sql = String.Format("SELECT * FROM `config_station_information` WHERE `ID`={0};",
+            string sql = String.Format("SELECT * FROM `runtime_line_data` WHERE `ID`={0};",
                 ID);
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader rdr = cmd.ExecuteReader();
@@ -138,13 +159,9 @@ namespace ElectricityWcfService
             RuntimeLineData Record = new RuntimeLineData()
             {
                 ID = (int)rdr["ID"],
-                /*
-                LineName = (string)rdr["LineName"],
-                StationID_Start = (int)rdr["StationID_Start"],
-                StationID_End = (int)rdr["StationID_End"],
-                VoltageLevel = double.Parse((string)rdr["VoltageLevel"]),
-                RatedCurrent = double.Parse((string)rdr["RatedCurrent"])
-                 * */
+                LineID = (int)rdr["LineID"],
+                LoadQuantity = double.Parse((string)rdr["LoadQuantity"]),
+                Time = (DateTime)rdr["Time"]
             };
             rdr.Close();
             return Record;
@@ -152,7 +169,7 @@ namespace ElectricityWcfService
         public RuntimeStationData FindRuntimeStationData(int ID)
         {
             connect();
-            string sql = String.Format("SELECT * FROM `config_station_information` WHERE `ID`={0};",
+            string sql = String.Format("SELECT * FROM `runtime_station_data` WHERE `ID`={0};",
                 ID);
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader rdr = cmd.ExecuteReader();
@@ -160,13 +177,10 @@ namespace ElectricityWcfService
             RuntimeStationData Record = new RuntimeStationData()
             {
                 ID = (int)rdr["ID"],
-                /*
-                LineName = (string)rdr["LineName"],
-                StationID_Start = (int)rdr["StationID_Start"],
-                StationID_End = (int)rdr["StationID_End"],
-                VoltageLevel = double.Parse((string)rdr["VoltageLevel"]),
-                RatedCurrent = double.Parse((string)rdr["RatedCurrent"])
-                 * */
+                StationID = (int)rdr["StationID"],
+                ActivePower = double.Parse((string)rdr["ActivePower"]),
+                ReactivePower = double.Parse((string)rdr["ReactivePower"]),
+                Time = (DateTime)rdr["Time"]
             };
             rdr.Close();
             return Record;
