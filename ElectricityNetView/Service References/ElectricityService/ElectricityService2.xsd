@@ -51,4 +51,27 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RuntimeStationData" nillable="true" type="tns:RuntimeStationData" />
+  <xs:complexType name="ForecastDayStationData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActivePower" type="xs:double" />
+      <xs:element minOccurs="0" name="ForecastType" type="xs:int" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="ReactivePower" type="xs:double" />
+      <xs:element minOccurs="0" name="StationID" type="xs:int" />
+      <xs:element minOccurs="0" name="Time" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ForecastDayStationData" nillable="true" type="tns:ForecastDayStationData" />
+  <xs:complexType name="ArrayOfRuntimeStationData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RuntimeStationData" nillable="true" type="tns:RuntimeStationData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRuntimeStationData" nillable="true" type="tns:ArrayOfRuntimeStationData" />
+  <xs:complexType name="ArrayOfForecastDayStationData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ForecastDayStationData" nillable="true" type="tns:ForecastDayStationData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfForecastDayStationData" nillable="true" type="tns:ArrayOfForecastDayStationData" />
 </xs:schema>

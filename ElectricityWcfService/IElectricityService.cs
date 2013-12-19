@@ -22,6 +22,8 @@ namespace ElectricityWcfService
         int AddRuntimeLineData(RuntimeLineData Record);
         [OperationContract]
         int AddRuntimeStationData(RuntimeStationData Record);
+        [OperationContract]
+        int AddForecastDayStationData(ForecastDayStationData Record);
 
         [OperationContract]
         LogUser FindLogUser(int ID);
@@ -36,8 +38,18 @@ namespace ElectricityWcfService
         [OperationContract]
         RuntimeStationData FindRuntimeStationData(int ID);
         [OperationContract]
+        List<ConfigStationInformation> SelectConfigStationInformation();
+        [OperationContract]
+        List<RuntimeStationData> SelectRuntimeStationData(int StationID, DateTime TargetDate);
+        [OperationContract]
+        List<ForecastDayStationData> SelectForecastDayStationData(int StationID, DateTime TargetDate,int Forecast);
+        [OperationContract]
         void StationAlert(int ID);
+        [OperationContract]
+        void Forecast(int StationID,DateTime TargetDate);
     }
+    [DataContract]
+    enum ForecastType { PointToPointRadio, Smooth, DayGrey, VariationCoefficient };
     [DataContract]
     public class LogUser
     {
@@ -220,6 +232,52 @@ namespace ElectricityWcfService
         {
             get { return _StationID; }
             set { _StationID = value; }
+        }
+        [DataMember]
+        public double ActivePower
+        {
+            get { return _ActivePower; }
+            set { _ActivePower = value; }
+        }
+        [DataMember]
+        public double ReactivePower
+        {
+            get { return _ReactivePower; }
+            set { _ReactivePower = value; }
+        }
+        [DataMember]
+        public DateTime Time
+        {
+            get { return _Time; }
+            set { _Time = value; }
+        }
+    }
+    [DataContract]
+    public class ForecastDayStationData
+    {
+        int _ID = 0;
+        int _StationID = 0;
+        int _ForecastType = 0;
+        double _ActivePower = 0;
+        double _ReactivePower = 0;
+        DateTime _Time = DateTime.Now;
+        [DataMember]
+        public int ID
+        {
+            get { return _ID; }
+            set { _ID = value; }
+        }
+        [DataMember]
+        public int StationID
+        {
+            get { return _StationID; }
+            set { _StationID = value; }
+        }
+        [DataMember]
+        public int ForecastType
+        {
+            get { return _ForecastType; }
+            set { _ForecastType = value; }
         }
         [DataMember]
         public double ActivePower

@@ -71,6 +71,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="AddForecastDayStationData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="Record" nillable="true" type="q6:ForecastDayStationData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddForecastDayStationDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddForecastDayStationDataResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="FindLogUser">
     <xs:complexType>
       <xs:sequence>
@@ -81,7 +95,7 @@
   <xs:element name="FindLogUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindLogUserResult" nillable="true" type="q6:LogUser" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindLogUserResult" nillable="true" type="q7:LogUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -95,7 +109,7 @@
   <xs:element name="FindConfigLineInformationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindConfigLineInformationResult" nillable="true" type="q7:ConfigLineInformation" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindConfigLineInformationResult" nillable="true" type="q8:ConfigLineInformation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -109,7 +123,7 @@
   <xs:element name="FindConfigStationInformationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindConfigStationInformationResult" nillable="true" type="q8:ConfigStationInformation" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindConfigStationInformationResult" nillable="true" type="q9:ConfigStationInformation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -123,7 +137,7 @@
   <xs:element name="FindConfigStationInformationByStationNameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindConfigStationInformationByStationNameResult" nillable="true" type="q9:ConfigStationInformation" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindConfigStationInformationByStationNameResult" nillable="true" type="q10:ConfigStationInformation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -137,7 +151,7 @@
   <xs:element name="FindRuntimeLineDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindRuntimeLineDataResult" nillable="true" type="q10:RuntimeLineData" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindRuntimeLineDataResult" nillable="true" type="q11:RuntimeLineData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -151,7 +165,38 @@
   <xs:element name="FindRuntimeStationDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindRuntimeStationDataResult" nillable="true" type="q11:RuntimeStationData" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="FindRuntimeStationDataResult" nillable="true" type="q12:RuntimeStationData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectRuntimeStationData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StationID" type="xs:int" />
+        <xs:element minOccurs="0" name="TargetDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectRuntimeStationDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="SelectRuntimeStationDataResult" nillable="true" type="q13:ArrayOfRuntimeStationData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectForecastDayStationData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StationID" type="xs:int" />
+        <xs:element minOccurs="0" name="TargetDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="Forecast" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectForecastDayStationDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="SelectForecastDayStationDataResult" nillable="true" type="q14:ArrayOfForecastDayStationData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -163,6 +208,19 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="StationAlertResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Forecast">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StationID" type="xs:int" />
+        <xs:element minOccurs="0" name="TargetDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ForecastResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

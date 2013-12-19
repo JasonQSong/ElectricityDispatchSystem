@@ -43,9 +43,10 @@ namespace ElectricityNetView
         }
 
         Random RandomSeed = new Random();
+        int timercount = 0;
         void TimerRefresh_Tick(object sender, EventArgs e)
         {
-            TemplateWebBrowserChart.JavaScript("pushdata", DateTime.Now.ToString(), RandomSeed.Next() % 15, 15 + RandomSeed.Next() % 15);
+            TemplateWebBrowserChart.JavaScript("pushdata", DateTime.Now.AddMinutes(15*timercount++).ToString(), RandomSeed.Next() % 15, 15 + RandomSeed.Next() % 15);
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -255,16 +256,20 @@ namespace ElectricityNetView
 
         private void ButtonExampleBus_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.InitialDirectory = System.IO.Path.GetFullPath(@".\example\data");
+            ofd.FileName = @"BUS.txt";
+            System.Windows.Forms.DialogResult dr = ofd.ShowDialog();
+            if (dr != System.Windows.Forms.DialogResult.OK)
+                return;
+            LoadBusFromFile(ofd.FileName);
+        }
+        private void LoadBusFromFile(string filename)
+        {
             ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
             try
             {
-                System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
-                ofd.InitialDirectory = System.IO.Path.GetFullPath(@".\data\data");
-                ofd.FileName = @"BUS.txt";
-                System.Windows.Forms.DialogResult dr = ofd.ShowDialog();
-                if (dr != System.Windows.Forms.DialogResult.OK)
-                    return;
-                FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
+                FileStream fs = new FileStream(filename, FileMode.Open);
                 List<ElectricityService.ConfigStationInformation> StationList = new List<ElectricityService.ConfigStationInformation>();
                 StreamReader sr = new StreamReader(fs, Encoding.GetEncoding("gb2312"));
                 string line;
@@ -297,16 +302,20 @@ namespace ElectricityNetView
         }
         private void ButtonExampleLine_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.InitialDirectory = System.IO.Path.GetFullPath(@".\example\data");
+            ofd.FileName = @"Line.txt";
+            System.Windows.Forms.DialogResult dr = ofd.ShowDialog();
+            if (dr != System.Windows.Forms.DialogResult.OK)
+                return;
+            LoadLineFromFile(ofd.FileName);
+        }
+        private void LoadLineFromFile(string filename)
+        {
             ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
             try
             {
-                System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
-                ofd.InitialDirectory = System.IO.Path.GetFullPath(@".\data\data");
-                ofd.FileName = @"Line.txt";
-                System.Windows.Forms.DialogResult dr = ofd.ShowDialog();
-                if (dr != System.Windows.Forms.DialogResult.OK)
-                    return;
-                FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
+                FileStream fs = new FileStream(filename, FileMode.Open);
                 List<ElectricityService.ConfigLineInformation> LineList = new List<ElectricityService.ConfigLineInformation>();
                 StreamReader sr = new StreamReader(fs, Encoding.GetEncoding("gb2312"));
                 string line;
@@ -317,8 +326,8 @@ namespace ElectricityNetView
                     paras = System.Text.RegularExpressions.Regex.Split(line, @"\s+");
                     if (paras.Length == 19)
                     {
-                        int StationID_Start=esc.FindConfigStationInformationByStationName(paras[1]).ID;
-                        int StationID_End=esc.FindConfigStationInformationByStationName(paras[2]).ID;
+                        int StationID_Start = esc.FindConfigStationInformationByStationName(paras[1]).ID;
+                        int StationID_End = esc.FindConfigStationInformationByStationName(paras[2]).ID;
                         ElectricityService.ConfigLineInformation tmpLine = new ElectricityService.ConfigLineInformation();
                         tmpLine.LineName = paras[0];
                         tmpLine.StationID_Start = StationID_Start;
@@ -342,44 +351,60 @@ namespace ElectricityNetView
 
         private void ButtonExampleDay_Click(object sender, RoutedEventArgs e)
         {
-            DateTime TimeReady = DatePickerExampleDay.SelectedDate ?? DateTime.Now;
+            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.Multiselect = true;
+            ofd.InitialDirectory = System.IO.Path.GetFullPath(@".\example\his");
+            ofd.FileName = "";
+            for (int i = 0; i < 15; i++)
+            {
+                ofd.FileName += String.Format("\"day{0}.txt\" ", i);
+            }
+            System.Windows.Forms.DialogResult dr = ofd.ShowDialog();
+            if (dr != System.Windows.Forms.DialogResult.OK)
+                return;
+            LoadDaysFromFiles(ofd.FileNames, DatePickerExampleDay.SelectedDate ?? DateTime.Now);
+        }
+        private void LoadDaysFromFiles(string[] filenames, DateTime StartDate)
+        {
             ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
             try
             {
-                System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
-                ofd.InitialDirectory = System.IO.Path.GetFullPath(@".\data\his");
-                ofd.FileName = @"day.txt";
-                System.Windows.Forms.DialogResult dr = ofd.ShowDialog();
-                if (dr != System.Windows.Forms.DialogResult.OK)
-                    return;
-                FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
-                List<ElectricityService.RuntimeStationData> DataList = new List<ElectricityService.RuntimeStationData>();
-                StreamReader sr = new StreamReader(fs, Encoding.GetEncoding("gb2312"));
-                string line;
-                string[] paras;
-                int istationid=1,jrecordid=0;
-                while (!sr.EndOfStream)
+                for (int i = 0; i < filenames.Length; i++)
                 {
-                    line = sr.ReadLine();
-                    paras = System.Text.RegularExpressions.Regex.Split(line, @"\s+");
-                    if (paras.Length == 3)
+                    DateTime TimeReady = StartDate + TimeSpan.FromDays(i);
+                    string filename = filenames[i];
+                    FileStream fs = new FileStream(filename, FileMode.Open);
+                    List<ElectricityService.RuntimeStationData> DataList = new List<ElectricityService.RuntimeStationData>();
+                    StreamReader sr = new StreamReader(fs, Encoding.GetEncoding("gb2312"));
+                    string line;
+                    string[] paras;
+                    int istationid = 1, jrecordid = 0;
+                    while (!sr.EndOfStream)
                     {
-                        ElectricityService.RuntimeStationData tmpData = new ElectricityService.RuntimeStationData()                {
-                            StationID=istationid,
-                            ActivePower=double.Parse(paras[0]),
-                            ReactivePower=double.Parse(paras[1]),
-                            Time=TimeReady+TimeSpan.FromMinutes(15*jrecordid)
-                        };
-                        jrecordid++;
-                        if(jrecordid>=96){
-                            jrecordid=0;
-                            istationid++;
+                        line = sr.ReadLine();
+                        paras = System.Text.RegularExpressions.Regex.Split(line, @"\s+");
+                        if (paras.Length == 3)
+                        {
+                            ElectricityService.RuntimeStationData tmpData = new ElectricityService.RuntimeStationData()
+                            {
+                                StationID = istationid,
+                                ActivePower = double.Parse(paras[0]),
+                                ReactivePower = double.Parse(paras[1]),
+                                Time = TimeReady + TimeSpan.FromMinutes(15 * jrecordid)
+                            };
+                            DataList.Add(tmpData);
+                            jrecordid++;
+                            if (jrecordid >= 96)
+                            {
+                                jrecordid = 0;
+                                istationid++;
+                            }
                         }
                     }
-                }
-                foreach (ElectricityService.RuntimeStationData tmpData in DataList)
-                {
-                    esc.AddRuntimeStationData(tmpData);
+                    foreach (ElectricityService.RuntimeStationData tmpData in DataList)
+                    {
+                        esc.AddRuntimeStationData(tmpData);
+                    }
                 }
                 esc.Close();
             }
@@ -388,6 +413,27 @@ namespace ElectricityNetView
                 MessageBox.Show("服务器请求超时");
                 esc.Abort();
             }
+        }
+        private void ButtonPredict_Click(object sender, RoutedEventArgs e)
+        {
+            ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
+            try
+            {
+                for (int i = 1; i <= 35; i++)
+                {
+                    esc.Forecast(i, DateTime.Now);
+                }
+                esc.Close();
+            }
+            catch (TimeoutException)
+            {
+                MessageBox.Show("服务器请求超时");
+                esc.Abort();
+            }
+        }
+        private void ListViewStationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
     public class ElectricStation

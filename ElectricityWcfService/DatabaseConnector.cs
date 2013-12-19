@@ -29,7 +29,7 @@ namespace ElectricityWcfService
         {
             connect();
             string sql = String.Format("INSERT INTO `log_user` (`Time`,`UserID`,`Action`) VALUE ('{0}','{1}','{2}');",
-                Record.Time.ToString("yyyy-MM-dd hh:mm:ss"), Record.UserID, Record.Action);
+                Record.Time.ToString("yyyy-MM-dd HH:mm:ss"), Record.UserID, Record.Action);
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             int result = cmd.ExecuteNonQuery();
             return result;
@@ -47,7 +47,7 @@ namespace ElectricityWcfService
         {
             connect();
             string sql = String.Format("INSERT INTO `config_station_information` (`StationName`,`Longitude`,`Latitude`,`BuildTime`,`VoltageLevel`,`InstallCapacity`) VALUE ('{0}','{1}','{2}','{3}','{4}','{5}');",
-                Record.StationName, Record.Longitude, Record.Latitude, Record.BuildTime.ToString("yyyy-MM-dd hh:mm:ss"), Record.VoltageLevel, Record.InstallCapacity);
+                Record.StationName, Record.Longitude, Record.Latitude, Record.BuildTime.ToString("yyyy-MM-dd HH:mm:ss"), Record.VoltageLevel, Record.InstallCapacity);
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             int result = cmd.ExecuteNonQuery();
             return result;
@@ -56,7 +56,7 @@ namespace ElectricityWcfService
         {
             connect();
             string sql = String.Format("INSERT INTO `runtime_line_data` (`LineID`,`LoadQuantity`,`Time`) VALUE ('{0}','{1}','{2}');",
-                Record.LineID, Record.LoadQuantity, Record.Time.ToString("yyyy-MM-dd hh:mm:ss"));
+                Record.LineID, Record.LoadQuantity, Record.Time.ToString("yyyy-MM-dd HH:mm:ss"));
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             int result = cmd.ExecuteNonQuery();
             return result;
@@ -65,7 +65,16 @@ namespace ElectricityWcfService
         {
             connect();
             string sql = String.Format("INSERT INTO `runtime_station_data` (`StationID`,`ActivePower`,`ReactivePower`,`Time`) VALUE ('{0}','{1}','{2}','{3}');",
-                Record.StationID, Record.ActivePower, Record.ReactivePower, Record.Time.ToString("yyyy-MM-dd hh:mm:ss"));
+                Record.StationID, Record.ActivePower, Record.ReactivePower, Record.Time.ToString("yyyy-MM-dd HH:mm:ss"));
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            int result = cmd.ExecuteNonQuery();
+            return result;
+        }
+        public int AddForecastDayStationData(ForecastDayStationData Record)
+        {
+            connect();
+            string sql = String.Format("INSERT INTO `forecast_day_station_data` (`StationID`,`ForecastType`,`ActivePower`,`ReactivePower`,`Time`) VALUE ('{0}','{1}','{2}','{3}','{4}');",
+                Record.StationID,Record.ForecastType, Record.ActivePower, Record.ReactivePower, Record.Time.ToString("yyyy-MM-dd HH:mm:ss"));
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             int result = cmd.ExecuteNonQuery();
             return result;
@@ -186,6 +195,57 @@ namespace ElectricityWcfService
             return Record;
         }
 
+        public List<RuntimeStationData> SelectRuntimeStationData(int StationID, DateTime TargetDate)
+        {
+            connect();
+            DateTime TimeStart = TargetDate.Date;
+            DateTime TimeEnd = TimeStart + TimeSpan.FromDays(1) - TimeSpan.FromSeconds(1);
+            List<RuntimeStationData> DataList = new List<RuntimeStationData>();
+            string sql = String.Format("SELECT * FROM `runtime_station_data` WHERE `StationID`={0} AND `Time` BETWEEN '{1}' AND '{2}';",
+                StationID, TimeStart.ToString("yyyy-MM-dd HH:mm:ss"), TimeEnd.ToString("yyyy-MM-dd HH:mm:ss"));
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                RuntimeStationData Record = new RuntimeStationData()
+                {
+                    ID = (int)rdr["ID"],
+                    StationID = (int)rdr["StationID"],
+                    ActivePower = double.Parse((string)rdr["ActivePower"]),
+                    ReactivePower = double.Parse((string)rdr["ReactivePower"]),
+                    Time = (DateTime)rdr["Time"]
+                };
+                DataList.Add(Record);
+            }
+            rdr.Close();
+            return DataList;
+        }
+        public List<ForecastDayStationData> SelectForecastDayStationData(int StationID, DateTime TargetDate,int Forecast)
+        {
+            connect();
+            DateTime TimeStart = TargetDate.Date;
+            DateTime TimeEnd = TimeStart + TimeSpan.FromDays(1) - TimeSpan.FromSeconds(1);
+            List<ForecastDayStationData> DataList = new List<ForecastDayStationData>();
+            string sql = String.Format("SELECT * FROM `forecast_day_station_data` WHERE `StationID`={0} AND `ForecastType`={1} AND `Time` BETWEEN '{2}' AND '{3}';",
+                StationID,Forecast, TimeStart.ToString("yyyy-MM-dd HH:mm:ss"), TimeEnd.ToString("yyyy-MM-dd HH:mm:ss"));
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                ForecastDayStationData Record = new ForecastDayStationData()
+                {
+                    ID = (int)rdr["ID"],
+                    StationID = (int)rdr["StationID"],
+                    ForecastType = (int)rdr["ForecastType"],
+                    ActivePower = double.Parse((string)rdr["ActivePower"]),
+                    ReactivePower = double.Parse((string)rdr["ReactivePower"]),
+                    Time = (DateTime)rdr["Time"]
+                };
+                DataList.Add(Record);
+            }
+            rdr.Close();
+            return DataList;
+        }
 
     }
 }

@@ -574,6 +574,131 @@ namespace ElectricityNetView.ElectricityService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ForecastDayStationData", Namespace="http://schemas.datacontract.org/2004/07/ElectricityWcfService")]
+    [System.SerializableAttribute()]
+    public partial class ForecastDayStationData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double ActivePowerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ForecastTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double ReactivePowerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int StationIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime TimeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double ActivePower {
+            get {
+                return this.ActivePowerField;
+            }
+            set {
+                if ((this.ActivePowerField.Equals(value) != true)) {
+                    this.ActivePowerField = value;
+                    this.RaisePropertyChanged("ActivePower");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ForecastType {
+            get {
+                return this.ForecastTypeField;
+            }
+            set {
+                if ((this.ForecastTypeField.Equals(value) != true)) {
+                    this.ForecastTypeField = value;
+                    this.RaisePropertyChanged("ForecastType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ID {
+            get {
+                return this.IDField;
+            }
+            set {
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double ReactivePower {
+            get {
+                return this.ReactivePowerField;
+            }
+            set {
+                if ((this.ReactivePowerField.Equals(value) != true)) {
+                    this.ReactivePowerField = value;
+                    this.RaisePropertyChanged("ReactivePower");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int StationID {
+            get {
+                return this.StationIDField;
+            }
+            set {
+                if ((this.StationIDField.Equals(value) != true)) {
+                    this.StationIDField = value;
+                    this.RaisePropertyChanged("StationID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Time {
+            get {
+                return this.TimeField;
+            }
+            set {
+                if ((this.TimeField.Equals(value) != true)) {
+                    this.TimeField = value;
+                    this.RaisePropertyChanged("Time");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ElectricityService.IElectricityService")]
     public interface IElectricityService {
@@ -607,6 +732,12 @@ namespace ElectricityNetView.ElectricityService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/AddRuntimeStationData", ReplyAction="http://tempuri.org/IElectricityService/AddRuntimeStationDataResponse")]
         System.Threading.Tasks.Task<int> AddRuntimeStationDataAsync(ElectricityNetView.ElectricityService.RuntimeStationData Record);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/AddForecastDayStationData", ReplyAction="http://tempuri.org/IElectricityService/AddForecastDayStationDataResponse")]
+        int AddForecastDayStationData(ElectricityNetView.ElectricityService.ForecastDayStationData Record);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/AddForecastDayStationData", ReplyAction="http://tempuri.org/IElectricityService/AddForecastDayStationDataResponse")]
+        System.Threading.Tasks.Task<int> AddForecastDayStationDataAsync(ElectricityNetView.ElectricityService.ForecastDayStationData Record);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/FindLogUser", ReplyAction="http://tempuri.org/IElectricityService/FindLogUserResponse")]
         ElectricityNetView.ElectricityService.LogUser FindLogUser(int ID);
@@ -646,11 +777,29 @@ namespace ElectricityNetView.ElectricityService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/FindRuntimeStationData", ReplyAction="http://tempuri.org/IElectricityService/FindRuntimeStationDataResponse")]
         System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.RuntimeStationData> FindRuntimeStationDataAsync(int ID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/SelectRuntimeStationData", ReplyAction="http://tempuri.org/IElectricityService/SelectRuntimeStationDataResponse")]
+        ElectricityNetView.ElectricityService.RuntimeStationData[] SelectRuntimeStationData(int StationID, System.DateTime TargetDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/SelectRuntimeStationData", ReplyAction="http://tempuri.org/IElectricityService/SelectRuntimeStationDataResponse")]
+        System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.RuntimeStationData[]> SelectRuntimeStationDataAsync(int StationID, System.DateTime TargetDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/SelectForecastDayStationData", ReplyAction="http://tempuri.org/IElectricityService/SelectForecastDayStationDataResponse")]
+        ElectricityNetView.ElectricityService.ForecastDayStationData[] SelectForecastDayStationData(int StationID, System.DateTime TargetDate, int Forecast);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/SelectForecastDayStationData", ReplyAction="http://tempuri.org/IElectricityService/SelectForecastDayStationDataResponse")]
+        System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.ForecastDayStationData[]> SelectForecastDayStationDataAsync(int StationID, System.DateTime TargetDate, int Forecast);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/StationAlert", ReplyAction="http://tempuri.org/IElectricityService/StationAlertResponse")]
         void StationAlert(int ID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/StationAlert", ReplyAction="http://tempuri.org/IElectricityService/StationAlertResponse")]
         System.Threading.Tasks.Task StationAlertAsync(int ID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/Forecast", ReplyAction="http://tempuri.org/IElectricityService/ForecastResponse")]
+        void Forecast(int StationID, System.DateTime TargetDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/Forecast", ReplyAction="http://tempuri.org/IElectricityService/ForecastResponse")]
+        System.Threading.Tasks.Task ForecastAsync(int StationID, System.DateTime TargetDate);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -720,6 +869,14 @@ namespace ElectricityNetView.ElectricityService {
             return base.Channel.AddRuntimeStationDataAsync(Record);
         }
         
+        public int AddForecastDayStationData(ElectricityNetView.ElectricityService.ForecastDayStationData Record) {
+            return base.Channel.AddForecastDayStationData(Record);
+        }
+        
+        public System.Threading.Tasks.Task<int> AddForecastDayStationDataAsync(ElectricityNetView.ElectricityService.ForecastDayStationData Record) {
+            return base.Channel.AddForecastDayStationDataAsync(Record);
+        }
+        
         public ElectricityNetView.ElectricityService.LogUser FindLogUser(int ID) {
             return base.Channel.FindLogUser(ID);
         }
@@ -768,12 +925,36 @@ namespace ElectricityNetView.ElectricityService {
             return base.Channel.FindRuntimeStationDataAsync(ID);
         }
         
+        public ElectricityNetView.ElectricityService.RuntimeStationData[] SelectRuntimeStationData(int StationID, System.DateTime TargetDate) {
+            return base.Channel.SelectRuntimeStationData(StationID, TargetDate);
+        }
+        
+        public System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.RuntimeStationData[]> SelectRuntimeStationDataAsync(int StationID, System.DateTime TargetDate) {
+            return base.Channel.SelectRuntimeStationDataAsync(StationID, TargetDate);
+        }
+        
+        public ElectricityNetView.ElectricityService.ForecastDayStationData[] SelectForecastDayStationData(int StationID, System.DateTime TargetDate, int Forecast) {
+            return base.Channel.SelectForecastDayStationData(StationID, TargetDate, Forecast);
+        }
+        
+        public System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.ForecastDayStationData[]> SelectForecastDayStationDataAsync(int StationID, System.DateTime TargetDate, int Forecast) {
+            return base.Channel.SelectForecastDayStationDataAsync(StationID, TargetDate, Forecast);
+        }
+        
         public void StationAlert(int ID) {
             base.Channel.StationAlert(ID);
         }
         
         public System.Threading.Tasks.Task StationAlertAsync(int ID) {
             return base.Channel.StationAlertAsync(ID);
+        }
+        
+        public void Forecast(int StationID, System.DateTime TargetDate) {
+            base.Channel.Forecast(StationID, TargetDate);
+        }
+        
+        public System.Threading.Tasks.Task ForecastAsync(int StationID, System.DateTime TargetDate) {
+            return base.Channel.ForecastAsync(StationID, TargetDate);
         }
     }
 }

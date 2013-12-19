@@ -37,6 +37,12 @@
   <wsdl:message name="IElectricityService_AddRuntimeStationData_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddRuntimeStationDataResponse" />
   </wsdl:message>
+  <wsdl:message name="IElectricityService_AddForecastDayStationData_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddForecastDayStationData" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_AddForecastDayStationData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddForecastDayStationDataResponse" />
+  </wsdl:message>
   <wsdl:message name="IElectricityService_FindLogUser_InputMessage">
     <wsdl:part name="parameters" element="tns:FindLogUser" />
   </wsdl:message>
@@ -73,11 +79,29 @@
   <wsdl:message name="IElectricityService_FindRuntimeStationData_OutputMessage">
     <wsdl:part name="parameters" element="tns:FindRuntimeStationDataResponse" />
   </wsdl:message>
+  <wsdl:message name="IElectricityService_SelectRuntimeStationData_InputMessage">
+    <wsdl:part name="parameters" element="tns:SelectRuntimeStationData" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_SelectRuntimeStationData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SelectRuntimeStationDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_SelectForecastDayStationData_InputMessage">
+    <wsdl:part name="parameters" element="tns:SelectForecastDayStationData" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_SelectForecastDayStationData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SelectForecastDayStationDataResponse" />
+  </wsdl:message>
   <wsdl:message name="IElectricityService_StationAlert_InputMessage">
     <wsdl:part name="parameters" element="tns:StationAlert" />
   </wsdl:message>
   <wsdl:message name="IElectricityService_StationAlert_OutputMessage">
     <wsdl:part name="parameters" element="tns:StationAlertResponse" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_Forecast_InputMessage">
+    <wsdl:part name="parameters" element="tns:Forecast" />
+  </wsdl:message>
+  <wsdl:message name="IElectricityService_Forecast_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ForecastResponse" />
   </wsdl:message>
   <wsdl:portType name="IElectricityService">
     <wsdl:operation name="AddLogUser">
@@ -99,6 +123,10 @@
     <wsdl:operation name="AddRuntimeStationData">
       <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/AddRuntimeStationData" message="tns:IElectricityService_AddRuntimeStationData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/AddRuntimeStationDataResponse" message="tns:IElectricityService_AddRuntimeStationData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddForecastDayStationData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/AddForecastDayStationData" message="tns:IElectricityService_AddForecastDayStationData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/AddForecastDayStationDataResponse" message="tns:IElectricityService_AddForecastDayStationData_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="FindLogUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/FindLogUser" message="tns:IElectricityService_FindLogUser_InputMessage" />
@@ -124,9 +152,21 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/FindRuntimeStationData" message="tns:IElectricityService_FindRuntimeStationData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/FindRuntimeStationDataResponse" message="tns:IElectricityService_FindRuntimeStationData_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="SelectRuntimeStationData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/SelectRuntimeStationData" message="tns:IElectricityService_SelectRuntimeStationData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/SelectRuntimeStationDataResponse" message="tns:IElectricityService_SelectRuntimeStationData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectForecastDayStationData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/SelectForecastDayStationData" message="tns:IElectricityService_SelectForecastDayStationData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/SelectForecastDayStationDataResponse" message="tns:IElectricityService_SelectForecastDayStationData_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="StationAlert">
       <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/StationAlert" message="tns:IElectricityService_StationAlert_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/StationAlertResponse" message="tns:IElectricityService_StationAlert_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Forecast">
+      <wsdl:input wsaw:Action="http://tempuri.org/IElectricityService/Forecast" message="tns:IElectricityService_Forecast_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IElectricityService/ForecastResponse" message="tns:IElectricityService_Forecast_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IElectricityService" type="tns:IElectricityService">
@@ -169,6 +209,15 @@
     </wsdl:operation>
     <wsdl:operation name="AddRuntimeStationData">
       <soap:operation soapAction="http://tempuri.org/IElectricityService/AddRuntimeStationData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddForecastDayStationData">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/AddForecastDayStationData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -230,8 +279,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SelectRuntimeStationData">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/SelectRuntimeStationData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectForecastDayStationData">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/SelectForecastDayStationData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="StationAlert">
       <soap:operation soapAction="http://tempuri.org/IElectricityService/StationAlert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Forecast">
+      <soap:operation soapAction="http://tempuri.org/IElectricityService/Forecast" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

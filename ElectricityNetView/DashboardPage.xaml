@@ -6,7 +6,9 @@
       xmlns:local="clr-namespace:ElectricityNetView"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
-	Title="DashboardPage" Loaded="Page_Loaded">
+	Title="DashboardPage" Loaded="Page_Loaded"
+      FontSize="20"
+      >
     <Page.Resources>
         <ImageBrush x:Key="PictureResource" ImageSource="picture.png" Stretch="Fill"></ImageBrush>
     </Page.Resources>
@@ -34,6 +36,7 @@
                         <ModelVisual3D.Content>
                             <Model3DGroup>
                                 <DirectionalLight Color="White" Direction="-1,-1,-1" />
+                                <!--
                                 <GeometryModel3D>
                                     <GeometryModel3D.Geometry>
                                         <MeshGeometry3D Positions="10,10,0 10,-10,0 -10,-10,0 -10,10,0"
@@ -47,6 +50,7 @@
                                         </DiffuseMaterial>
                                     </GeometryModel3D.Material>
                                 </GeometryModel3D>
+                                -->
                             </Model3DGroup>
                         </ModelVisual3D.Content>
                     </ModelVisual3D>
@@ -60,7 +64,7 @@
             <Grid Grid.Column="2" Grid.Row="0">
                 <WebBrowser Name="WebBrowserChart"></WebBrowser>
             </Grid>
-            <Grid Grid.Column="2" Grid.Row="1">
+            <Grid Grid.Column="2" Grid.Row="1" Background="White">
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -79,10 +83,10 @@
                         <RowDefinition Height="2*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Button Name="ButtonPredictGrey" Grid.Column="1" Grid.Row="1" Content="灰度预测" Margin="3"/>
-                    <Button Grid.Column="1" Grid.Row="2" Content="蓝度预测" Margin="3"/>
-                    <Button Grid.Column="1" Grid.Row="3" Content="黑度预测" Margin="3"/>
-                    <Button Grid.Column="1" Grid.Row="4" Content="绿度预测" Margin="3"/>
+                    <RadioButton Grid.Column="1" Grid.Row="1" Name="RadioForecastPointToPoint">正常日点对点倍比法</RadioButton>
+                    <RadioButton Grid.Column="1" Grid.Row="2" Name="RadioForecastSmooth">正常日倍比平滑法</RadioButton>
+                    <RadioButton Grid.Column="1" Grid.Row="3" Name="RadioForecastDayGray">灰色预测</RadioButton>
+                    <RadioButton Grid.Column="1" Grid.Row="4" Name="RadioForecastVariationCoefficient">变化系数法</RadioButton>
                     <TextBlock Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Text="负&#13;荷&#13;预&#13;测" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Grid>
                 <Grid Grid.Column="1">
@@ -121,8 +125,8 @@
                 <Button Grid.Column="1" Grid.Row="1" Content="2D"/>
                 <Button Grid.Column="2" Grid.Row="1" Content="主界面"/>
             </Grid-->
-            <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
-                <ListView>
+            <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Background="White">
+                <ListView Name="ListViewStationList" SelectionChanged="ListViewStationList_SelectionChanged">
                     <ListView.View>
                         <GridView>
                             <GridView.Columns>
@@ -148,8 +152,11 @@
                     </ListView.Items>
                 </ListView>
             </Grid>
-            <Grid Grid.Column="0" Grid.Row="2" Grid.RowSpan="2">
+            <Grid Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Background="White">
                 <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Name="ButtonPredict" Click="ButtonPredict_Click">Predict</Button>
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Button Name="ButtonExampleBus" Click="ButtonExampleBus_Click">Bus</Button>
                         <Button Name="ButtonExampleLine" Click="ButtonExampleLine_Click">Line</Button>
@@ -173,7 +180,7 @@
                     </StackPanel>
                 </StackPanel>
             </Grid>
-            <Grid Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2">
+            <Grid Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Background="White">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition Height="auto"/>

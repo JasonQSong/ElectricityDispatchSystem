@@ -42,6 +42,11 @@ namespace ElectricityWcfService
             DatabaseConnector dc = new DatabaseConnector();
             return dc.AddRuntimeStationData(Record);
         }
+        public int AddForecastDayStationData(ForecastDayStationData Record)
+        {
+            DatabaseConnector dc = new DatabaseConnector();
+            return dc.AddForecastDayStationData(Record);
+        }
         public LogUser FindLogUser(int ID)
         {
             DatabaseConnector dc = new DatabaseConnector();
@@ -72,8 +77,27 @@ namespace ElectricityWcfService
             DatabaseConnector dc = new DatabaseConnector();
             return dc.FindRuntimeStationData(ID);
         }
+        public List<ConfigStationInformation> SelectConfigStationInformation()
+        {
+            throw new NotImplementedException();
+        }
+        public List<RuntimeStationData> SelectRuntimeStationData(int StationID, DateTime TargetDate)
+        {
+            DatabaseConnector dc = new DatabaseConnector();
+            return dc.SelectRuntimeStationData(StationID,TargetDate);
+        }
+        public List<ForecastDayStationData> SelectForecastDayStationData(int StationID, DateTime TargetDate,int Forecast)
+        {
+            DatabaseConnector dc = new DatabaseConnector();
+            return dc.SelectForecastDayStationData(StationID, TargetDate,Forecast);
+        }
         public void StationAlert(int ID)
         {
+        }
+        public void Forecast(int StationID, DateTime TargetDate)
+        {
+            Controller ctrl = new Controller();
+            ctrl.Forecast(StationID, TargetDate);
         }
     }
 }
