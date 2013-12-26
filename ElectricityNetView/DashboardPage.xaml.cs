@@ -442,7 +442,7 @@ namespace ElectricityNetView
                     List<ElectricityService.ForecastDayStationData> DataList = esc.SelectForecastDayStationData(StationID, DateTime.Now, 1).ToList();
                     foreach (ElectricityService.ForecastDayStationData record in DataList)
                     {
-                        TemplateWebBrowserChart.JavaScript("AddData", "PointToPoint", record.Time, record.ActivePower);
+                        TemplateWebBrowserChart.JavaScript("AddData", "PointToPoint", record.Time.ToString("yyyy-MM-dd HH:mm:ss"), record.ActivePower);
                     }
                 }
                 if (RadioForecastSmooth.IsChecked ?? false)
@@ -451,7 +451,7 @@ namespace ElectricityNetView
                     List<ElectricityService.ForecastDayStationData> DataList = esc.SelectForecastDayStationData(StationID, DateTime.Now, 2).ToList();
                     foreach (ElectricityService.ForecastDayStationData record in DataList)
                     {
-                        TemplateWebBrowserChart.JavaScript("AddData", "Smooth", record.Time, record.ActivePower);
+                        TemplateWebBrowserChart.JavaScript("AddData", "Smooth", record.Time.ToString("yyyy-MM-dd HH:mm:ss"), record.ActivePower);
                     }
                 }
                 if (RadioForecastDayGray.IsChecked ?? false)
@@ -460,7 +460,7 @@ namespace ElectricityNetView
                     List<ElectricityService.ForecastDayStationData> DataList = esc.SelectForecastDayStationData(StationID, DateTime.Now, 3).ToList();
                     foreach (ElectricityService.ForecastDayStationData record in DataList)
                     {
-                        TemplateWebBrowserChart.JavaScript("AddData", "DayGray", record.Time, record.ActivePower);
+                        TemplateWebBrowserChart.JavaScript("AddData", "DayGray", record.Time.ToString("yyyy-MM-dd HH:mm:ss"), record.ActivePower);
                     }
                 }
                 if (RadioForecastVariationCoefficient.IsChecked ?? false)
@@ -469,7 +469,7 @@ namespace ElectricityNetView
                     List<ElectricityService.ForecastDayStationData> DataList = esc.SelectForecastDayStationData(StationID, DateTime.Now, 4).ToList();
                     foreach (ElectricityService.ForecastDayStationData record in DataList)
                     {
-                        TemplateWebBrowserChart.JavaScript("AddData", "VariationCoefficient", record.Time, record.ActivePower);
+                        TemplateWebBrowserChart.JavaScript("AddData", "VariationCoefficient", record.Time.ToString("yyyy-MM-dd HH:mm:ss"), record.ActivePower);
                     }
                 }
                 this.Dispatcher.Invoke(new Action(() => { WriteLine("[UI]填充预测数据完毕：{0}", StationID); }));
@@ -500,7 +500,7 @@ namespace ElectricityNetView
                 {
                     if (record.Time > DateTime.Now)
                         break;
-                    TemplateWebBrowserChart.JavaScript("AddData", "runtime", record.Time, record.ActivePower);
+                    TemplateWebBrowserChart.JavaScript("AddData", "runtime", record.Time.ToString("yyyy-MM-dd HH:mm:ss"), record.ActivePower);
                 }
                 Forecast(stationui.ID, DateTime.Today);
                 esc.Close();
@@ -647,7 +647,7 @@ namespace ElectricityNetView
                             break;
                         if (ListViewStationList.SelectedItem ==stationui)
                         {
-                            TemplateWebBrowserChart.JavaScript("AddData", "runtime", record.Time, record.ActivePower);
+                            TemplateWebBrowserChart.JavaScript("AddData", "runtime", record.Time.ToString("yyyy-MM-dd HH:mm:ss"), record.ActivePower);
                         }
                         LastRecord = record;
                     }
