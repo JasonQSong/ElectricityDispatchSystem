@@ -42,7 +42,9 @@ namespace ElectricityWcfService
         [OperationContract]
         List<RuntimeStationData> SelectRuntimeStationData(int StationID, DateTime TargetDate);
         [OperationContract]
-        List<ForecastDayStationData> SelectForecastDayStationData(int StationID, DateTime TargetDate,int Forecast);
+        List<ForecastDayStationData> SelectForecastDayStationData(int StationID, DateTime TargetDate, int Forecast);
+        [OperationContract]
+        List<RuntimeStationData> UpdateRuntimeStationData(int StartID, int StationID);
         [OperationContract]
         void StationAlert(int ID);
         [OperationContract]

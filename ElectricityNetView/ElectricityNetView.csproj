@@ -170,6 +170,9 @@
     <Content Include="chart\chart.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="E:\chartinterface.js">
+      <Link>chart\chartinterface.js</Link>
+    </Content>
     <Content Include="chart\exporting.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

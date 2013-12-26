@@ -169,6 +169,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SelectConfigStationInformation">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectConfigStationInformationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="SelectConfigStationInformationResult" nillable="true" type="q13:ArrayOfConfigStationInformation" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="SelectRuntimeStationData">
     <xs:complexType>
       <xs:sequence>
@@ -180,7 +192,7 @@
   <xs:element name="SelectRuntimeStationDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="SelectRuntimeStationDataResult" nillable="true" type="q13:ArrayOfRuntimeStationData" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="SelectRuntimeStationDataResult" nillable="true" type="q14:ArrayOfRuntimeStationData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -196,7 +208,22 @@
   <xs:element name="SelectForecastDayStationDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="SelectForecastDayStationDataResult" nillable="true" type="q14:ArrayOfForecastDayStationData" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="SelectForecastDayStationDataResult" nillable="true" type="q15:ArrayOfForecastDayStationData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateRuntimeStationData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StartID" type="xs:int" />
+        <xs:element minOccurs="0" name="StationID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateRuntimeStationDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/ElectricityWcfService" minOccurs="0" name="UpdateRuntimeStationDataResult" nillable="true" type="q16:ArrayOfRuntimeStationData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

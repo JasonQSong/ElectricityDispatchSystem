@@ -6,11 +6,11 @@ $(document).ready(function () {
             renderTo:'container'
         },
         title: {
-            text: 'Monthly Average Temperature',
+            text: '电站预测功率',
             x: -20 //center
         },
         subtitle: {
-            text: 'Source: WorldClimate.com',
+            text: '',
             x: -20
         },
         // xAxis: {
@@ -27,7 +27,7 @@ $(document).ready(function () {
         },
         yAxis: {
             title: {
-                text: 'Temperature (°C)'
+                text: '千瓦'
             },
             plotLines: [{
                 value: 0,
@@ -50,6 +50,12 @@ $(document).ready(function () {
         //     pointInterval: 60 * 1000 // one day
         // }]
         series: [{
+            name: '实时功率',
+            data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+            pointStart: Date.UTC(2010, 0, 1),
+            pointInterval: 900 * 1000 // one day
+        }, {
+            name: '预测功率',
             data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
             pointStart: Date.UTC(2010, 0, 1),
             pointInterval: 900 * 1000 // one day
@@ -73,8 +79,64 @@ $(document).ready(function () {
     };
     chart = new Highcharts.Chart(options);
 });
-function pushdata(time, active, reactive) {
-    chart.series[0].addPoint([time, active],true,true);
+function Init() {
+    //TODO:
+    //option = { chart: { renderto: "container" } };
+}
+function LoadChartType(charttype) {
+    //TODO:
+}
+function LoadData(datatype, column, data) {
 
 }
+function LoadDataArray(datatype, column, data) {
+    //time = eval(time);
+    //data = eval(data);
+    //TODO:loaddata run before Start
+    //datatype:enum of "RunTime","PointToPoint","Smooth","DayGray","VariationCoefficient"
+    //eg
+    //datatype="runtime"
+    //time="["2013-12-25 21:00:00","2013-12-25 22:00:00","2013-12-25 22:15:00"]"
+    //data="[20,40,-100]"
+    /*
+    switch (datatype) {
+        case "runtime": {
+            if (option["series"][0]) {
+                option["series"][0].push();
+            }
+            else {
+                option["series"][0] = data;
+            }
+        }
+    }
+    */
+}
 
+function Start() {
+    //TODO:print the chart
+    //Init();
+    //chart = new Highchart();
+}
+function AddData(datatype, column, data) {
+    //TODO: runtime add single data (runtime)
+    //eg
+    //datatype="runtime"
+    //time="2013-12-25 21:00:00"
+    //data=20
+    switch (datatype) {
+        case "runtime": {
+            break;
+        }
+    }
+}
+function AddDataArray(datatype, column, data) {
+    //TODO: runtime add data array (predict)
+    //eg
+    //datatype="runtime"
+    //time="["2013-12-25 21:00:00","2013-12-25 22:00:00","2013-12-25 22:15:00"]"
+    //data="[20,40,-100]"
+}
+function DeleteDataSeries(datatype) {
+    //TODO: delete the whole series
+    //warning: can reload the series
+}

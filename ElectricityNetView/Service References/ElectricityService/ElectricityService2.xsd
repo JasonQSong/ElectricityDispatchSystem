@@ -62,6 +62,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ForecastDayStationData" nillable="true" type="tns:ForecastDayStationData" />
+  <xs:complexType name="ArrayOfConfigStationInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ConfigStationInformation" nillable="true" type="tns:ConfigStationInformation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfConfigStationInformation" nillable="true" type="tns:ArrayOfConfigStationInformation" />
   <xs:complexType name="ArrayOfRuntimeStationData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="RuntimeStationData" nillable="true" type="tns:RuntimeStationData" />

@@ -195,6 +195,30 @@ namespace ElectricityWcfService
             return Record;
         }
 
+        public List<ConfigStationInformation> SelectConfigStationInformation()
+        {
+            connect();
+            List<ConfigStationInformation> StationList = new List<ConfigStationInformation>();
+            string sql = String.Format("SELECT * FROM `config_station_information` WHERE 1;");
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                ConfigStationInformation Record = new ConfigStationInformation()
+                {
+                    ID = (int)rdr["ID"],                    
+                    StationName = (string)rdr["StationName"],
+                    Longitude=double.Parse((string)rdr["Longitude"]),
+                    Latitude=double.Parse((string)rdr["Latitude"]),
+                    BuildTime=(DateTime)rdr["BuildTime"],
+                    VoltageLevel=double.Parse((string)rdr["VoltageLevel"]),
+                    InstallCapacity=double.Parse((string)rdr["InstallCapacity"])
+                };
+                StationList.Add(Record);
+            }
+            rdr.Close();
+            return StationList;
+        }
         public List<RuntimeStationData> SelectRuntimeStationData(int StationID, DateTime TargetDate)
         {
             connect();
@@ -237,6 +261,29 @@ namespace ElectricityWcfService
                     ID = (int)rdr["ID"],
                     StationID = (int)rdr["StationID"],
                     ForecastType = (int)rdr["ForecastType"],
+                    ActivePower = double.Parse((string)rdr["ActivePower"]),
+                    ReactivePower = double.Parse((string)rdr["ReactivePower"]),
+                    Time = (DateTime)rdr["Time"]
+                };
+                DataList.Add(Record);
+            }
+            rdr.Close();
+            return DataList;
+        }
+        public List<RuntimeStationData> UpdateRuntimeStationData(int StartID, int StationID)
+        {
+            connect();
+            List<RuntimeStationData> DataList = new List<RuntimeStationData>();
+            string sql = String.Format("SELECT * FROM `runtime_station_data` WHERE `ID`>{0} AND `StationID`={0};",
+                StartID,StationID);
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                RuntimeStationData Record = new RuntimeStationData()
+                {
+                    ID = (int)rdr["ID"],
+                    StationID = (int)rdr["StationID"],
                     ActivePower = double.Parse((string)rdr["ActivePower"]),
                     ReactivePower = double.Parse((string)rdr["ReactivePower"]),
                     Time = (DateTime)rdr["Time"]

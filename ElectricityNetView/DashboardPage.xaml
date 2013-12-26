@@ -7,7 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
 	Title="DashboardPage" Loaded="Page_Loaded"
-      FontSize="20"
+      FontSize="16"
+      FontFamily="微软雅黑"
       >
     <Page.Resources>
         <ImageBrush x:Key="PictureResource" ImageSource="picture.png" Stretch="Fill"></ImageBrush>
@@ -17,11 +18,11 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="5*"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="2*"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -56,9 +57,12 @@
                     </ModelVisual3D>
                 </Viewport3D>
                 <Grid>
-                        <Canvas Name="CanvasMap" Width="1024" Height="1024" Margin="-512" MouseMove="CanvasMap_MouseMove">
-                            <Image Name="ImageFake" Width="1024" Height="1024"/>
-                        </Canvas>
+                    <Canvas Name="CanvasMap" Width="1024" Height="1024" Margin="-512" MouseMove="CanvasMap_MouseMove" MouseWheel="CanvasMap_MouseWheel">
+                        <Canvas.RenderTransform>
+                            <ScaleTransform CenterX="512" CenterY="512" ScaleX="1" ScaleY="1"/>
+                        </Canvas.RenderTransform>
+                        <Image Name="ImageFake" Width="1024" Height="1024" />
+                    </Canvas>
                 </Grid>
             </Grid>
             <Grid Grid.Column="2" Grid.Row="0">
@@ -69,7 +73,25 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.ColumnSpan="2" Background="SkyBlue">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel HorizontalAlignment="Center" Grid.Column="0">
+                        <TextBlock>实时数据</TextBlock>
+                        <TextBlock Name="TextBlockRealTime" Foreground="Orange" FontSize="24">100</TextBlock>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Center" Grid.Column="1">
+                        <TextBlock>预测数据</TextBlock>
+                        <TextBlock Name="TextBlockPredict" Foreground="Orange" FontSize="24">100</TextBlock>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="6*"/>
@@ -83,13 +105,13 @@
                         <RowDefinition Height="2*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <RadioButton Grid.Column="1" Grid.Row="1" Name="RadioForecastPointToPoint">正常日点对点倍比法</RadioButton>
-                    <RadioButton Grid.Column="1" Grid.Row="2" Name="RadioForecastSmooth">正常日倍比平滑法</RadioButton>
-                    <RadioButton Grid.Column="1" Grid.Row="3" Name="RadioForecastDayGray">灰色预测</RadioButton>
-                    <RadioButton Grid.Column="1" Grid.Row="4" Name="RadioForecastVariationCoefficient">变化系数法</RadioButton>
+                    <CheckBox Grid.Column="1" Grid.Row="1" Name="RadioForecastPointToPoint">正常日点对点倍比法</CheckBox>
+                    <CheckBox Grid.Column="1" Grid.Row="2" Name="RadioForecastSmooth">正常日倍比平滑法</CheckBox>
+                    <CheckBox Grid.Column="1" Grid.Row="3" Name="RadioForecastDayGray">灰色预测</CheckBox>
+                    <CheckBox Grid.Column="1" Grid.Row="4" Name="RadioForecastVariationCoefficient">变化系数法</CheckBox>
                     <TextBlock Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Text="负&#13;荷&#13;预&#13;测" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Grid>
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="6*"/>
@@ -103,7 +125,7 @@
                         <RowDefinition Height="2*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Button Name="ButtonDisplayNonproduct" Grid.Column="1" Grid.Row="1" Content="显示无功功率" Click="ButtonDisplayNonproduct_Click" Margin="3"/>
+                    <Button Name="ButtonDisplayNonproduct" Grid.Column="1" Grid.Row="1" Content="三维显示" Click="ButtonDisplayNonproduct_Click" Margin="3"/>
                     <Button Grid.Column="1" Grid.Row="2" Content="显示有功功率" Margin="3"/>
                     <Button Grid.Column="1" Grid.Row="3" Content="总功率" Margin="3"/>
                     <Button Grid.Column="1" Grid.Row="4" Content="功率文字输出" Margin="3"/>
@@ -126,34 +148,36 @@
                 <Button Grid.Column="2" Grid.Row="1" Content="主界面"/>
             </Grid-->
             <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Background="White">
-                <ListView Name="ListViewStationList" SelectionChanged="ListViewStationList_SelectionChanged">
+                <ListView Name="ListViewStationList" SelectionChanged="ListViewStationList_SelectionChanged" SelectedIndex="0">
                     <ListView.View>
                         <GridView>
                             <GridView.Columns>
                                 <GridViewColumn Header="序号"
-                                        DisplayMemberBinding="{Binding StationId}"/>
+                                        DisplayMemberBinding="{Binding ID}"/>
                                 <GridViewColumn Header="电站名称"
                                         DisplayMemberBinding="{Binding StationName}"/>
-                                <GridViewColumn Header="位置"
-                                        DisplayMemberBinding="{Binding Location}"/>
-                                <GridViewColumn Header="发电量"
-                                        DisplayMemberBinding="{Binding Product}"/>
+                                <GridViewColumn Header="经度"
+                                        DisplayMemberBinding="{Binding Longitude}"/>
+                                <GridViewColumn Header="纬度"
+                                        DisplayMemberBinding="{Binding Latitude}"/>
+                                <GridViewColumn Header="电压等级"
+                                        DisplayMemberBinding="{Binding VoltageLevel}"/>
+                                <GridViewColumn Header="装机容量"
+                                        DisplayMemberBinding="{Binding InstallCapacity}"/>
+                                <GridViewColumn Header="实时功率（有功）"
+                                        DisplayMemberBinding="{Binding Active}"/>
+                                <GridViewColumn Header="实时功率（无功）"
+                                        DisplayMemberBinding="{Binding Reactive}"/>
                             </GridView.Columns>
                         </GridView>
                     </ListView.View>
                     <ListView.Items>
-                        <local:ElectricStation StationName="station" StationId="1" Location="116,39" Product="20"></local:ElectricStation>
-                        <local:ElectricStation StationName="station" StationId="2" Location="116,39" Product="20"></local:ElectricStation>
-                        <local:ElectricStation StationName="station" StationId="3" Location="116,39" Product="20"></local:ElectricStation>
-                        <local:ElectricStation StationName="station" StationId="4" Location="116,39" Product="20"></local:ElectricStation>
-                        <local:ElectricStation StationName="station" StationId="5" Location="116,39" Product="20"></local:ElectricStation>
-                        <local:ElectricStation StationName="station" StationId="6" Location="116,39" Product="20"></local:ElectricStation>
-                        <local:ElectricStation StationName="station" StationId="7" Location="116,39" Product="20"></local:ElectricStation>
                     </ListView.Items>
                 </ListView>
             </Grid>
             <Grid Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Background="White">
                 <StackPanel>
+                    <TextBlock>快捷工具：</TextBlock>
                     <StackPanel Orientation="Horizontal">
                         <Button Name="ButtonPredict" Click="ButtonPredict_Click">Predict</Button>
                     </StackPanel>
@@ -162,11 +186,6 @@
                         <Button Name="ButtonExampleLine" Click="ButtonExampleLine_Click">Line</Button>
                         <DatePicker Name="DatePickerExampleDay"></DatePicker>
                         <Button Name="ButtonExampleDay" Click="ButtonExampleDay_Click">G</Button>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>Center</TextBlock>
-                        <TextBox Name="TextBoxCenter">121,31</TextBox>
-                        <Button Name="ButtonParaCenter" Click="ButtonParaCenter_Click">Set</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock>Label</TextBlock>
@@ -180,21 +199,23 @@
                     </StackPanel>
                 </StackPanel>
             </Grid>
-            <Grid Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Background="White">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <TextBox Name="ConsoleOutput"></TextBox>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0">>></TextBlock>
-                    <TextBox Name="ConsoleInput" Grid.Column="1"></TextBox>
+            <Border Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Background="White" BorderThickness="1" BorderBrush="Black">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBox Name="ConsoleOutput" BorderThickness="0" TextChanged="ConsoleOutput_TextChanged" VerticalScrollBarVisibility="Auto" />
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0">>></TextBlock>
+                        <TextBox Name="ConsoleInput" Grid.Column="1" BorderThickness="0" KeyUp="ConsoleInput_KeyUp"></TextBox>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Border>
         </Grid>
     </Grid>
 </Page>

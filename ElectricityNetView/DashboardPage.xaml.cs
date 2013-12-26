@@ -30,51 +30,32 @@ namespace ElectricityNetView
         void Init()
         {
             MapCenter = new Point(121, 31);
-            MapZoom = 12;
-            HDegreePerPx = 0.000575;
-            VDegreePerPx = 0.000495;
             TemplateWebBrowserChart = new TemplateWebBrowser(WebBrowserChart);
             BackGroundWorkerDownloadMap.RunWorkerCompleted += BackGroundWorkerDownloadMap_RunWorkerCompleted;
             BackGroundWorkerDownloadMap.DoWork += BackGroundWorkerDownloadMap_DoWork;
             TimerRefresh = new System.Windows.Threading.DispatcherTimer();
             TimerRefresh.Tick += TimerRefresh_Tick;
             TimerRefresh.Interval = TimeSpan.FromSeconds(1);
-            TimerRefresh.Start();
         }
 
         Random RandomSeed = new Random();
-        int timercount = 0;
         void TimerRefresh_Tick(object sender, EventArgs e)
         {
-            TemplateWebBrowserChart.JavaScript("pushdata", DateTime.Now.AddMinutes(15*timercount++).ToString(), RandomSeed.Next() % 15, 15 + RandomSeed.Next() % 15);
+            FetchAll();
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            SetCenter(121, 31);
+            ReloadImage();
             TemplateWebBrowserChart.NavigateToTemplate(@"chart/template.html");
+            Login();
+            TimerRefresh.Start();
         }
 
         private void ButtonDisplayNonproduct_Click(object sender, RoutedEventArgs e)
         {
-
+            System.Diagnostics.Process.Start("3Dtravel.exe");
         }
 
-        System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
-
-        private void ButtonPredictGrey_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                ImageFake.Source = new BitmapImage(new Uri(ofd.FileName, UriKind.Absolute));
-
-        }
-        public double HDegreePerPx { get; protected set; }
-        public double VDegreePerPx { get; protected set; }
-        private void ButtonParaConfirm_Click(object sender, RoutedEventArgs e)
-        {
-
-
-        }
         private void TestDegreePerPx(double x, double y)
         {
             //x=121.000172;121.000747;121.0001321;...;121.500348;121.500923;121.5001498;
@@ -110,7 +91,6 @@ namespace ElectricityNetView
                     }
                 }
             }
-            MessageBox.Show(file);
         }
         private bool CompareFile(string basefile, string file)
         {
@@ -134,30 +114,61 @@ namespace ElectricityNetView
                 return true;
             }
         }
-        private void ButtonParaCenter_Click(object sender, RoutedEventArgs e)
-        {
-            double x, y;
-            bool bx = double.TryParse(TextBoxCenter.Text.Substring(0, TextBoxCenter.Text.IndexOf(',')), out x);
-            bool by = double.TryParse(TextBoxCenter.Text.Substring(TextBoxCenter.Text.IndexOf(',') + 1), out y);
-            if (bx && by)
-                SetCenter(x, y);
-        }
         public void DownloadMap(string filename)
         {
             BackGroundWorkerDownloadMap.RunWorkerAsync();
         }
-        public Image MapImage { get; set; }
-        public Point MapCenter { get; set; }
-        public int MapZoom { get; set; }
-        private void SetCenter(double x, double y)
+        private double _HDegreePerPxBase = 0.000575;
+        private double _VDegreePerPxBase = 0.000495;
+        private int _MapZoomBase = 12;
+        public double HDegreePerPx
         {
-            double ImageLeft = Canvas.GetLeft(ImageFake);
-            ImageLeft += (MapCenter.X - x) / HDegreePerPx;
-            Canvas.SetLeft(ImageFake, ImageLeft);
-            double ImageTop = Canvas.GetTop(ImageFake);
-            ImageTop += (y - MapCenter.Y) / VDegreePerPx;
-            Canvas.SetTop(ImageFake, ImageTop);
-            MapCenter = new Point(x, y);
+            get
+            {
+                return this._HDegreePerPxBase / Math.Pow(2, (MapZoom - _MapZoomBase));
+            }
+        }
+        public double VDegreePerPx
+        {
+            get
+            {
+                return this._VDegreePerPxBase / Math.Pow(2, (MapZoom - _MapZoomBase));
+            }
+        }
+        public Image MapImage { get; set; }
+        private Point _MapCenter = new Point(121, 31);
+        public Point MapCenter
+        {
+            get { return this._MapCenter; }
+            set
+            {
+                double ImageLeft = Canvas.GetLeft(ImageFake);
+                double ImageTop = Canvas.GetTop(ImageFake);
+                Point Offset = new Point((this._MapCenter.X - value.X) / HDegreePerPx, (value.Y - this._MapCenter.Y) / VDegreePerPx);
+                ImageLeft += Offset.X;
+                ImageTop += Offset.Y;
+                Canvas.SetLeft(ImageFake, ImageLeft);
+                Canvas.SetTop(ImageFake, ImageTop);
+                this._MapCenter = value;
+                ReloadImage();
+            }
+        }
+        private int _MapZoom = 12;
+        public int MapZoom
+        {
+            get { return this._MapZoom; }
+            set
+            {
+                double scale = Math.Pow(2, value - this._MapZoom);
+                ScaleTransform st = CanvasMap.RenderTransform as ScaleTransform;
+                st.ScaleX *= scale;
+                st.ScaleY *= scale;
+                this._MapZoom = value;
+                ReloadImage();
+            }
+        }
+        private void ReloadImage()
+        {
             string filename = GetFileName(MapCenter.X, MapCenter.Y, MapZoom);
             if (File.Exists(filename))
             {
@@ -166,6 +177,9 @@ namespace ElectricityNetView
                     ImageFake.Source = new BitmapImage(new Uri(filename));
                     Canvas.SetLeft(ImageFake, 0);
                     Canvas.SetTop(ImageFake, 0);
+                    ScaleTransform st = CanvasMap.RenderTransform as ScaleTransform;
+                    st.ScaleX = 1;
+                    st.ScaleY = 1;
                 }
                 catch (Exception) { }
             }
@@ -178,18 +192,7 @@ namespace ElectricityNetView
         System.ComponentModel.BackgroundWorker BackGroundWorkerDownloadMap = new System.ComponentModel.BackgroundWorker();
         void BackGroundWorkerDownloadMap_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            string filename = GetFileName(MapCenter.X, MapCenter.Y, MapZoom);
-            if (File.Exists(filename))
-            {
-                ImageFake.Source = new BitmapImage(new Uri(filename));
-                Canvas.SetLeft(ImageFake, 0);
-                Canvas.SetTop(ImageFake, 0);
-            }
-            else
-            {
-                if (!BackGroundWorkerDownloadMap.IsBusy)
-                    BackGroundWorkerDownloadMap.RunWorkerAsync();
-            }
+            ReloadImage();
         }
 
         void BackGroundWorkerDownloadMap_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -200,9 +203,14 @@ namespace ElectricityNetView
                 if (File.Exists(filename))
                     break;
                 System.Net.WebClient myWebClient = new System.Net.WebClient();
+                //myWebClient.Proxy = new System.Net.WebProxy("http://cache.sjtu.edu.cn:8080");
                 string api = String.Format(MapAPIFormat, MapCenter.X, MapCenter.Y, MapZoom);
                 if (!File.Exists(filename))
+                {
+                    this.Dispatcher.Invoke(new Action(() => { WriteLine("[BGW_DownloadMap]正在下载地图：{0}", System.IO.Path.GetFileName(filename)); }));
                     myWebClient.DownloadFile(api, filename);
+                    this.Dispatcher.Invoke(new Action(() => { WriteLine("[BGW_DownloadMap]地图下载完成：{0}", System.IO.Path.GetFileName(filename)); }));
+                }
             }
         }
 
@@ -243,13 +251,12 @@ namespace ElectricityNetView
         Point PointBefore = new Point(0, 0);
         private void CanvasMap_MouseMove(object sender, MouseEventArgs e)
         {
-            Point PointNow = e.GetPosition(e.Source as FrameworkElement);
+            Point PointNow = e.GetPosition(CanvasMap);
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 double dx = (PointNow.X - PointBefore.X) * HDegreePerPx;
                 double dy = (PointNow.Y - PointBefore.Y) * VDegreePerPx;
-                SetCenter(MapCenter.X - dx, MapCenter.Y + dy);
-                PointBefore.Offset(dx, dy);
+                MapCenter = new Point(MapCenter.X - dx, MapCenter.Y + dy);
             }
             PointBefore = PointNow;
         }
@@ -433,14 +440,158 @@ namespace ElectricityNetView
         }
         private void ListViewStationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            int StationID = ListViewStationList.SelectedIndex + 1;
+            //TemplateWebBrowserChart.NavigateToTemplate(@"chart/template.html");
+            ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
+            try
+            {
+                List<ElectricityService.ForecastDayStationData> DataList = new List<ElectricityService.ForecastDayStationData>();
+                DataList = esc.SelectForecastDayStationData(StationID, DateTime.Now, 1).ToList();
+                foreach (ElectricityService.ForecastDayStationData record in DataList)
+                {
+                    //TemplateWebBrowserChart.JavaScript("pushdata", record.Time.ToString(), 1, record.ActivePower);
+                }
+                esc.Close();
+            }
+            catch (TimeoutException)
+            {
+                MessageBox.Show("服务器请求超时");
+                esc.Abort();
+            }
+        }
 
+        private void ConsoleOutput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ConsoleOutput.ScrollToEnd();
+        }
+
+        private void ConsoleInput_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return || e.Key == Key.Enter)
+            {
+                ConsoleOutput.Text += ConsoleInput.Text + Environment.NewLine;
+                string cmd = ConsoleInput.Text;
+                cmd = cmd.Replace(',', ' ');
+                cmd.Trim();
+                if (cmd != "")
+                {
+                    string[] args = System.Text.RegularExpressions.Regex.Split(cmd, @"\s+");
+                    switch (args[0])
+                    {
+                        case "MapCenter":
+                            {
+                                double x, y;
+                                if (args.Count() != 3)
+                                {
+                                    WriteLine("MapCenter require 2 arguments");
+                                    return;
+                                }
+                                if (!double.TryParse(args[1], out x))
+                                {
+                                    WriteLine("Cannot parse {0} to double", args[1]);
+                                    return;
+                                }
+                                if (!double.TryParse(args[2], out y))
+                                {
+                                    WriteLine("Cannot parse {0} to double", args[2]);
+                                    return;
+                                }
+                                MapCenter = new Point(x, y);
+                            }
+                            break;
+                    }
+                }
+                ConsoleInput.Text = "";
+            }
+        }
+
+        private void CanvasMap_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            MapZoom += e.Delta / 120;
+        }
+        private void WriteLine(string format, params object[] args)
+        {
+            ConsoleOutput.Text += DateTime.Now.ToString("[yyyy-MM-dd HH:mm:ss]") + String.Format(format, args) + Environment.NewLine;
+        }
+        List<StationUI> StationUIList = new List<StationUI>();
+        private void Login()
+        {
+            ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
+            try
+            {
+                List<ElectricityService.ConfigStationInformation> StationList=esc.SelectConfigStationInformation().ToList();
+                foreach (ElectricityService.ConfigStationInformation record in StationList)
+                {
+                    StationUIList.Add(new StationUI()
+                    {
+                        ID=record.ID,
+                        StationName=record.StationName,
+                        Longitude=record.Longitude,
+                        Latitude=record.Latitude,
+                        BuildTime=record.BuildTime,
+                        VoltageLevel=record.VoltageLevel,
+                        InstallCapacity=record.InstallCapacity
+                    });
+                }
+                ListViewStationList.Items.Clear();
+                foreach(StationUI stationui in StationUIList)
+                    ListViewStationList.Items.Add(stationui);
+                esc.Close();
+            }
+            catch (TimeoutException)
+            {
+                MessageBox.Show("服务器请求超时");
+                esc.Abort();
+            }
+        }
+        private void FetchAll()
+        {
+            ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
+            try
+            {
+                foreach (StationUI stationui in StationUIList)
+                {
+                    List<ElectricityService.RuntimeStationData> DataList= esc.SelectRuntimeStationData(stationui.ID, DateTime.Today).ToList();
+                    if (DataList.Count == 0)
+                        return;
+                    ElectricityService.RuntimeStationData LastRecord=null;
+                    foreach (ElectricityService.RuntimeStationData record in DataList)
+                    {
+                        if (record.Time > DateTime.Now)
+                            break;
+                        LastRecord = record;
+                        TemplateWebBrowserChart.JavaScript("AddData","runtime", record.Time, record.ActivePower);
+                    }
+                    if (LastRecord != null)
+                    {
+                        stationui.Active = LastRecord.ActivePower;
+                        stationui.Reactive = LastRecord.ReactivePower;
+                        stationui.RuntimeID = LastRecord.ID;
+                    }
+                }
+                ListViewStationList.UpdateLayout();
+                esc.Close();
+            }
+            catch (TimeoutException)
+            {
+                MessageBox.Show("服务器请求超时");
+                esc.Abort();
+            }
         }
     }
-    public class ElectricStation
+    public class StationUI
     {
-        public int StationId { get; set; }
+        public int ID { get; set; }
         public string StationName { get; set; }
-        public string Location { get; set; }
-        public int Product { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+        public DateTime BuildTime { get; set; }
+        public double VoltageLevel { get; set; }
+        public double InstallCapacity { get; set; }
+
+        public double Active { get; set; }
+        public double Reactive { get; set; }
+
+        public int RuntimeID { get; set; }
     }
 }

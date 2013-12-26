@@ -777,6 +777,12 @@ namespace ElectricityNetView.ElectricityService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/FindRuntimeStationData", ReplyAction="http://tempuri.org/IElectricityService/FindRuntimeStationDataResponse")]
         System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.RuntimeStationData> FindRuntimeStationDataAsync(int ID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/SelectConfigStationInformation", ReplyAction="http://tempuri.org/IElectricityService/SelectConfigStationInformationResponse")]
+        ElectricityNetView.ElectricityService.ConfigStationInformation[] SelectConfigStationInformation();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/SelectConfigStationInformation", ReplyAction="http://tempuri.org/IElectricityService/SelectConfigStationInformationResponse")]
+        System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.ConfigStationInformation[]> SelectConfigStationInformationAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/SelectRuntimeStationData", ReplyAction="http://tempuri.org/IElectricityService/SelectRuntimeStationDataResponse")]
         ElectricityNetView.ElectricityService.RuntimeStationData[] SelectRuntimeStationData(int StationID, System.DateTime TargetDate);
         
@@ -788,6 +794,12 @@ namespace ElectricityNetView.ElectricityService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/SelectForecastDayStationData", ReplyAction="http://tempuri.org/IElectricityService/SelectForecastDayStationDataResponse")]
         System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.ForecastDayStationData[]> SelectForecastDayStationDataAsync(int StationID, System.DateTime TargetDate, int Forecast);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/UpdateRuntimeStationData", ReplyAction="http://tempuri.org/IElectricityService/UpdateRuntimeStationDataResponse")]
+        ElectricityNetView.ElectricityService.RuntimeStationData[] UpdateRuntimeStationData(int StartID, int StationID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/UpdateRuntimeStationData", ReplyAction="http://tempuri.org/IElectricityService/UpdateRuntimeStationDataResponse")]
+        System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.RuntimeStationData[]> UpdateRuntimeStationDataAsync(int StartID, int StationID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IElectricityService/StationAlert", ReplyAction="http://tempuri.org/IElectricityService/StationAlertResponse")]
         void StationAlert(int ID);
@@ -925,6 +937,14 @@ namespace ElectricityNetView.ElectricityService {
             return base.Channel.FindRuntimeStationDataAsync(ID);
         }
         
+        public ElectricityNetView.ElectricityService.ConfigStationInformation[] SelectConfigStationInformation() {
+            return base.Channel.SelectConfigStationInformation();
+        }
+        
+        public System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.ConfigStationInformation[]> SelectConfigStationInformationAsync() {
+            return base.Channel.SelectConfigStationInformationAsync();
+        }
+        
         public ElectricityNetView.ElectricityService.RuntimeStationData[] SelectRuntimeStationData(int StationID, System.DateTime TargetDate) {
             return base.Channel.SelectRuntimeStationData(StationID, TargetDate);
         }
@@ -939,6 +959,14 @@ namespace ElectricityNetView.ElectricityService {
         
         public System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.ForecastDayStationData[]> SelectForecastDayStationDataAsync(int StationID, System.DateTime TargetDate, int Forecast) {
             return base.Channel.SelectForecastDayStationDataAsync(StationID, TargetDate, Forecast);
+        }
+        
+        public ElectricityNetView.ElectricityService.RuntimeStationData[] UpdateRuntimeStationData(int StartID, int StationID) {
+            return base.Channel.UpdateRuntimeStationData(StartID, StationID);
+        }
+        
+        public System.Threading.Tasks.Task<ElectricityNetView.ElectricityService.RuntimeStationData[]> UpdateRuntimeStationDataAsync(int StartID, int StationID) {
+            return base.Channel.UpdateRuntimeStationDataAsync(StartID, StationID);
         }
         
         public void StationAlert(int ID) {

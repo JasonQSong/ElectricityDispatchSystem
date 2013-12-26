@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("chart/chart.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("chartinterface.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("chart/exporting.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("chart/highcharts.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("chart/jquery-1.10.2.min.js")]

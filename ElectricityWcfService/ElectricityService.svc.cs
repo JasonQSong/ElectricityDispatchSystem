@@ -79,7 +79,8 @@ namespace ElectricityWcfService
         }
         public List<ConfigStationInformation> SelectConfigStationInformation()
         {
-            throw new NotImplementedException();
+            DatabaseConnector dc = new DatabaseConnector();
+            return dc.SelectConfigStationInformation();
         }
         public List<RuntimeStationData> SelectRuntimeStationData(int StationID, DateTime TargetDate)
         {
@@ -90,6 +91,11 @@ namespace ElectricityWcfService
         {
             DatabaseConnector dc = new DatabaseConnector();
             return dc.SelectForecastDayStationData(StationID, TargetDate,Forecast);
+        }
+        public List<RuntimeStationData> UpdateRuntimeStationData(int StartID, int StationID)
+        {
+            DatabaseConnector dc = new DatabaseConnector();
+            return dc.UpdateRuntimeStationData(StartID,StationID);
         }
         public void StationAlert(int ID)
         {

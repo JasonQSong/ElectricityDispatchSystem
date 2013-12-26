@@ -13,6 +13,23 @@ namespace ElectricityNetView
         public TemplateWebBrowser(WebBrowser BaseWebBrowser)
         {
             this.BaseWebBrowser = BaseWebBrowser;
+            this.BaseWebBrowser.Navigating += BaseWebBrowser_Navigating;
+            this.BaseWebBrowser.Navigated += BaseWebBrowser_Navigated;
+        }
+        public bool Navigating { get; set; }
+        void BaseWebBrowser_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
+        {
+            Navigating = true;
+            ScriptWaitingList.Clear();
+        }
+        void BaseWebBrowser_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            Navigating = false;
+            foreach (ScriptClass SingleScript in ScriptWaitingList)
+            {
+                JavaScript(SingleScript.Script, SingleScript.Args);
+            }
+            ScriptWaitingList.Clear();
         }
         public void NavigateToTemplate(string TemplateFile)
         {
@@ -35,11 +52,27 @@ namespace ElectricityNetView
                 sr = new StreamReader(fs);
                 TemplateString = TemplateString.Replace("<Include>" + filename + "</Include>", sr.ReadToEnd());
             }
+            fs.Close();
             this.BaseWebBrowser.NavigateToString(TemplateString);
         }
+        public class ScriptClass
+        {
+            public string Script { get; set; }
+            public object[] Args { get; set; }
+        }
+        public List<ScriptClass> ScriptWaitingList = new List<ScriptClass>();
         public void JavaScript(string script,params object [] args)
         {
             this.BaseWebBrowser.InvokeScript(script, args);
+            /*
+            if (!Navigating)
+            {
+            }
+            else
+            {
+                ScriptWaitingList.Add(new ScriptClass() { Script = script, Args = args });
+            }
+             * */
         }
         public void PureJavaScript(string script)
         {
