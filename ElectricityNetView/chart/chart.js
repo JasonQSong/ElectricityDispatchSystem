@@ -155,7 +155,7 @@ function Init() {
                         }
                     },
                     title: {
-                        text: 'Live random data'
+                        text: 'Data'
                     },
                     xAxis: {
                         type: 'datetime',
@@ -219,9 +219,45 @@ function AddData(datatype, column, data) {
         case "runtime": {
             var x = column;
             var y = eval(data);
+            chart.series[0]["name"] = datatype;
             chart.series[0].addPoint([x, y], true, true);
             // series[0].addPoint([x,y],true,true);
+            break;
         }
+        case "PointToPoint": {
+            var x = column;
+            var y = eval(data);
+            chart.series[1]["name"] = datatype;
+            chart.series[1].addPoint([x, y], true, true);
+            // series[0].addPoint([x,y],true,true);
+            break;
+        }
+        case "Smooth": {
+            var x = column;
+            var y = eval(data);
+            chart.series[2]["name"] = datatype;
+            chart.series[2].addPoint([x, y], true, true);
+            // series[0].addPoint([x,y],true,true);
+            break;
+        }
+        case "DayGray": {
+            var x = column;
+            var y = eval(data);
+            chart.series[3]["name"] = datatype;
+            chart.series[3].addPoint([x, y], true, true);
+            // series[0].addPoint([x,y],true,true);
+            break;
+        }
+        case "VariationCoefficient": {
+            var x = column;
+            var y = eval(data);
+            chart.series[4]["name"] = datatype;
+            chart.series[4].addPoint([x, y], true, true);
+            // series[0].addPoint([x,y],true,true);
+            break;
+        }
+        default:
+            break;
     }
 }
 function AddDataArray(datatype, column, data) {
@@ -232,6 +268,31 @@ function AddDataArray(datatype, column, data) {
     //data="[20,40,-100]"
 }
 function DeleteDataSeries(datatype) {
+    switch (datatype)
+    {
+        case "runtime": {
+            chart.series[0].remove();
+            break;
+        }
+        case "PointToPoint": {
+            chart.series[1].remove();
+            break;
+        }
+        case "Smooth": {
+            chart.series[2].remove();
+            break;
+        }
+        case "DayGray": {
+            chart.series[3].remove();
+            break;
+        }
+        case "VariationCoefficient": {
+            chart.series[4].remove();
+            break;
+        }
+        default:
+            break;
+    }
     //TODO: delete the whole series
     //warning: can reload the series
 }
