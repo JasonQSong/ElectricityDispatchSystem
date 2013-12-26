@@ -1,5 +1,4 @@
 E:\GitHub\SoftwareEngineering\ElectricityNetView\bin\Debug\ElectricityNetView.exe.config
-C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\ElectricityNetView.exe.config
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\chart\chart.js
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\chart\exporting.js
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\chart\highcharts.js
@@ -26,9 +25,9 @@ C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineer
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\example\data\G.txt
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\example\data\config.txt
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\example\data\BUS.txt
+C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\ElectricityNetView.exe.config
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\ElectricityNetView.exe
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\bin\Debug\ElectricityNetView.pdb
-C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\ElectricityNetView.csprojResolveAssemblyReference.cache
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\MainWindow.baml
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\StartPage.baml
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\StationPage.baml

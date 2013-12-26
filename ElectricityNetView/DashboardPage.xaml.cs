@@ -41,13 +41,14 @@ namespace ElectricityNetView
         Random RandomSeed = new Random();
         void TimerRefresh_Tick(object sender, EventArgs e)
         {
-            FetchAll();
+            UpdateAll();
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ReloadImage();
             TemplateWebBrowserChart.NavigateToTemplate(@"chart/template.html");
             Login();
+            FetchAll();
             TimerRefresh.Start();
         }
 
@@ -142,13 +143,16 @@ namespace ElectricityNetView
             get { return this._MapCenter; }
             set
             {
-                double ImageLeft = Canvas.GetLeft(ImageFake);
-                double ImageTop = Canvas.GetTop(ImageFake);
                 Point Offset = new Point((this._MapCenter.X - value.X) / HDegreePerPx, (value.Y - this._MapCenter.Y) / VDegreePerPx);
-                ImageLeft += Offset.X;
-                ImageTop += Offset.Y;
-                Canvas.SetLeft(ImageFake, ImageLeft);
-                Canvas.SetTop(ImageFake, ImageTop);
+                foreach (UIElement fe in CanvasMap.Children)
+                {
+                    double Left = Canvas.GetLeft(fe);
+                    double Top = Canvas.GetTop(fe);
+                    Left += Offset.X;
+                    Top += Offset.Y;
+                    Canvas.SetLeft(fe, Left);
+                    Canvas.SetTop(fe, Top);
+                }
                 this._MapCenter = value;
                 ReloadImage();
             }
@@ -199,6 +203,8 @@ namespace ElectricityNetView
         {
             while (true)
             {
+                if (!Directory.Exists("./Map"))
+                    System.IO.Directory.CreateDirectory("./Map");
                 string filename = GetFileName(MapCenter.X, MapCenter.Y, MapZoom);
                 if (File.Exists(filename))
                     break;
@@ -215,7 +221,7 @@ namespace ElectricityNetView
         }
 
         String MapAPIFormat = "http://api.map.baidu.com/staticimage?copyright=1&width=1023&height=1023&center={0},{1}&zoom={2}";
-        String MapFileFormat = "./{0}.{1}.{2}.png";
+        String MapFileFormat = "./Map/{0}.{1}.{2}.png";
         private String GetFileName(double x, double y, int MapZoom)
         {
             return System.IO.Path.GetFullPath(String.Format(MapFileFormat, x.ToString("0.000000"), y.ToString("0.000000"), MapZoom));
@@ -421,15 +427,52 @@ namespace ElectricityNetView
                 esc.Abort();
             }
         }
-        private void ButtonPredict_Click(object sender, RoutedEventArgs e)
+        private void Forecast(int StationID, DateTime TargetDate)
         {
             ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
             try
             {
-                for (int i = 1; i <= 35; i++)
+                this.Dispatcher.Invoke(new Action(() => { WriteLine("[BGW_ForeCast]正在生成预测数据：{0}...",StationID); }));
+                esc.Forecast(StationID, DateTime.Now);
+                this.Dispatcher.Invoke(new Action(() => { WriteLine("[BGW_ForeCast]预测数据生成完毕：{0}", StationID); }));
+                this.Dispatcher.Invoke(new Action(() => { WriteLine("[UI]正在填充预测数据：{0}...", StationID); }));
+                if (RadioForecastPointToPoint.IsChecked??false)
                 {
-                    esc.Forecast(i, DateTime.Now);
+                    TemplateWebBrowserChart.JavaScript("DeleteData", "PointToPoint");
+                    List<ElectricityService.ForecastDayStationData> DataList = esc.SelectForecastDayStationData(StationID, DateTime.Now, 1).ToList();
+                    foreach (ElectricityService.ForecastDayStationData record in DataList)
+                    {
+                        TemplateWebBrowserChart.JavaScript("AddData", "PointToPoint", record.Time, record.ActivePower);
+                    }
                 }
+                if (RadioForecastSmooth.IsChecked ?? false)
+                {
+                    TemplateWebBrowserChart.JavaScript("DeleteData", "Smooth");
+                    List<ElectricityService.ForecastDayStationData> DataList = esc.SelectForecastDayStationData(StationID, DateTime.Now, 2).ToList();
+                    foreach (ElectricityService.ForecastDayStationData record in DataList)
+                    {
+                        TemplateWebBrowserChart.JavaScript("AddData", "Smooth", record.Time, record.ActivePower);
+                    }
+                }
+                if (RadioForecastDayGray.IsChecked ?? false)
+                {
+                    TemplateWebBrowserChart.JavaScript("DeleteData", "DayGray");
+                    List<ElectricityService.ForecastDayStationData> DataList = esc.SelectForecastDayStationData(StationID, DateTime.Now, 3).ToList();
+                    foreach (ElectricityService.ForecastDayStationData record in DataList)
+                    {
+                        TemplateWebBrowserChart.JavaScript("AddData", "DayGray", record.Time, record.ActivePower);
+                    }
+                }
+                if (RadioForecastVariationCoefficient.IsChecked ?? false)
+                {
+                    TemplateWebBrowserChart.JavaScript("DeleteData", "VariationCoefficient");
+                    List<ElectricityService.ForecastDayStationData> DataList = esc.SelectForecastDayStationData(StationID, DateTime.Now, 4).ToList();
+                    foreach (ElectricityService.ForecastDayStationData record in DataList)
+                    {
+                        TemplateWebBrowserChart.JavaScript("AddData", "VariationCoefficient", record.Time, record.ActivePower);
+                    }
+                }
+                this.Dispatcher.Invoke(new Action(() => { WriteLine("[UI]填充预测数据完毕：{0}", StationID); }));
                 esc.Close();
             }
             catch (TimeoutException)
@@ -440,17 +483,26 @@ namespace ElectricityNetView
         }
         private void ListViewStationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int StationID = ListViewStationList.SelectedIndex + 1;
-            //TemplateWebBrowserChart.NavigateToTemplate(@"chart/template.html");
+            TemplateWebBrowserChart.JavaScript("DeleteData", "runtime");
+            if (ListViewStationList.SelectedItem == null)
+                return;
+            StationUI stationui = ListViewStationList.SelectedItem as StationUI;
+            MapCenter = new Point(stationui.Longitude, stationui.Latitude);
             ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
             try
             {
-                List<ElectricityService.ForecastDayStationData> DataList = new List<ElectricityService.ForecastDayStationData>();
-                DataList = esc.SelectForecastDayStationData(StationID, DateTime.Now, 1).ToList();
-                foreach (ElectricityService.ForecastDayStationData record in DataList)
+                this.Dispatcher.Invoke(new Action(() => { WriteLine("[UI]正在请求当日历史数据：{0}", stationui.ID); }));
+                List<ElectricityService.RuntimeStationData> DataList = esc.SelectRuntimeStationData(stationui.ID, DateTime.Today).ToList();
+                this.Dispatcher.Invoke(new Action(() => { WriteLine("[UI]当日历史数据请求完毕：{0}", stationui.ID); }));
+                if (DataList.Count == 0)
+                    return;
+                foreach (ElectricityService.RuntimeStationData record in DataList)
                 {
-                    //TemplateWebBrowserChart.JavaScript("pushdata", record.Time.ToString(), 1, record.ActivePower);
+                    if (record.Time > DateTime.Now)
+                        break;
+                    TemplateWebBrowserChart.JavaScript("AddData", "runtime", record.Time, record.ActivePower);
                 }
+                Forecast(stationui.ID, DateTime.Today);
                 esc.Close();
             }
             catch (TimeoutException)
@@ -560,13 +612,51 @@ namespace ElectricityNetView
                         if (record.Time > DateTime.Now)
                             break;
                         LastRecord = record;
-                        TemplateWebBrowserChart.JavaScript("AddData","runtime", record.Time, record.ActivePower);
                     }
                     if (LastRecord != null)
                     {
                         stationui.Active = LastRecord.ActivePower;
                         stationui.Reactive = LastRecord.ReactivePower;
                         stationui.RuntimeID = LastRecord.ID;
+                    }
+                }
+                ListViewStationList.UpdateLayout();
+                DrawStations();
+                esc.Close();
+            }
+            catch (TimeoutException)
+            {
+                MessageBox.Show("服务器请求超时");
+                esc.Abort();
+            }
+        }
+        private void UpdateAll()
+        {
+            ElectricityService.ElectricityServiceClient esc = new ElectricityService.ElectricityServiceClient();
+            try
+            {
+                foreach (StationUI stationui in StationUIList)
+                {
+                    List<ElectricityService.RuntimeStationData> DataList = esc.UpdateRuntimeStationData(stationui.RuntimeID,stationui.ID).ToList();
+                    if (DataList.Count == 0)
+                        return;
+                    ElectricityService.RuntimeStationData LastRecord = null;
+                    foreach (ElectricityService.RuntimeStationData record in DataList)
+                    {
+                        if (record.Time > DateTime.Now)
+                            break;
+                        if (ListViewStationList.SelectedItem ==stationui)
+                        {
+                            TemplateWebBrowserChart.JavaScript("AddData", "runtime", record.Time, record.ActivePower);
+                        }
+                        LastRecord = record;
+                    }
+                    if (LastRecord != null)
+                    {
+                        stationui.Active = LastRecord.ActivePower;
+                        stationui.Reactive = LastRecord.ReactivePower;
+                        stationui.RuntimeID = LastRecord.ID;
+                        this.Dispatcher.Invoke(new Action(() => { WriteLine("[BGW_UpdateRuntime]数据已更新：{0}", stationui.ID); }));
                     }
                 }
                 ListViewStationList.UpdateLayout();
@@ -577,6 +667,43 @@ namespace ElectricityNetView
                 MessageBox.Show("服务器请求超时");
                 esc.Abort();
             }
+        }
+        private void CheckBoxForecast_Checked(object sender, RoutedEventArgs e)
+        {
+            StationUI stationui = ListViewStationList.SelectedItem as StationUI;
+            Forecast(stationui.ID,DateTime.Today);
+        }
+
+        private void ButtonClean_Click(object sender, RoutedEventArgs e)
+        {
+            Directory.Delete("./Map");
+        }
+        private void DrawStations()
+        {
+            foreach (StationUI stationui in StationUIList)
+            {
+                Ellipse circle = new Ellipse();
+                circle.Opacity = 0.5;
+                int dx = (int)((stationui.Longitude - MapCenter.X) / HDegreePerPx);
+                int dy = (int)((stationui.Latitude - MapCenter.Y) / VDegreePerPx);
+                double r = stationui.Active * MapZoom;
+                if (r > 0)
+                {
+                    circle.Fill = Brushes.Green;
+                }
+                else
+                {
+                    r = -r;
+                    circle.Fill = Brushes.Red;
+                }
+                r = Math.Log10(r)*10;
+                circle.Width = 2 * r;
+                circle.Height = 2 * r;
+                CanvasMap.Children.Add(circle);
+                Canvas.SetLeft(circle, dx + 512-r);
+                Canvas.SetTop(circle, dy + 512-r);
+            }
+
         }
     }
     public class StationUI

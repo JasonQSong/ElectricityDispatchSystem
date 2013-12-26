@@ -27,7 +27,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="3">
+            <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
                 <Viewport3D>
                     <Viewport3D.Camera>
                         <PerspectiveCamera Position="15,15,15" LookDirection="-1,-1,-1"
@@ -105,7 +105,7 @@
                         <RowDefinition Height="2*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <CheckBox Grid.Column="1" Grid.Row="1" Name="RadioForecastPointToPoint">正常日点对点倍比法</CheckBox>
+                    <CheckBox Grid.Column="1" Grid.Row="1" Name="RadioForecastPointToPoint" Checked="CheckBoxForecast_Checked">正常日点对点倍比法</CheckBox>
                     <CheckBox Grid.Column="1" Grid.Row="2" Name="RadioForecastSmooth">正常日倍比平滑法</CheckBox>
                     <CheckBox Grid.Column="1" Grid.Row="3" Name="RadioForecastDayGray">灰色预测</CheckBox>
                     <CheckBox Grid.Column="1" Grid.Row="4" Name="RadioForecastVariationCoefficient">变化系数法</CheckBox>
@@ -179,7 +179,7 @@
                 <StackPanel>
                     <TextBlock>快捷工具：</TextBlock>
                     <StackPanel Orientation="Horizontal">
-                        <Button Name="ButtonPredict" Click="ButtonPredict_Click">Predict</Button>
+                        <Button Name="ButtonClean" Click="ButtonClean_Click">Clean</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Button Name="ButtonExampleBus" Click="ButtonExampleBus_Click">Bus</Button>

@@ -61,18 +61,17 @@ namespace ElectricityNetView
             public object[] Args { get; set; }
         }
         public List<ScriptClass> ScriptWaitingList = new List<ScriptClass>();
-        public void JavaScript(string script,params object [] args)
+        public bool JavaScript(string script,params object [] args)
         {
-            this.BaseWebBrowser.InvokeScript(script, args);
-            /*
-            if (!Navigating)
+            try
             {
+                this.BaseWebBrowser.InvokeScript(script, args);
+                return true;
             }
-            else
+            catch (Exception)
             {
-                ScriptWaitingList.Add(new ScriptClass() { Script = script, Args = args });
+                return false;
             }
-             * */
         }
         public void PureJavaScript(string script)
         {
