@@ -45,3 +45,4 @@ C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineer
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\ElectricityNetView.csproj.GenerateResource.Cache
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\ElectricityNetView.exe
 C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\ElectricityNetView.pdb
+C:\Users\Songqj.songqj-pc\Documents\Visual Studio 2012\Projects\SoftwareEngineering\ElectricityNetView\obj\Debug\ElectricityNetView.csprojResolveAssemblyReference.cache

@@ -184,6 +184,7 @@ namespace ElectricityNetView
                     ScaleTransform st = CanvasMap.RenderTransform as ScaleTransform;
                     st.ScaleX = 1;
                     st.ScaleY = 1;
+                    DrawStations();
                 }
                 catch (Exception) { }
             }
@@ -680,10 +681,15 @@ namespace ElectricityNetView
         }
         private void DrawStations()
         {
+            Image IF = ImageFake;
+            CanvasMap.Children.Clear();
+            CanvasMap.Children.Add(IF);
             foreach (StationUI stationui in StationUIList)
             {
                 Ellipse circle = new Ellipse();
+                TextBlock tb = new TextBlock();
                 circle.Opacity = 0.5;
+                tb.Text = String.Format("{0},{1}", stationui.Longitude, stationui.Latitude);
                 int dx = (int)((stationui.Longitude - MapCenter.X) / HDegreePerPx);
                 int dy = (int)((stationui.Latitude - MapCenter.Y) / VDegreePerPx);
                 double r = stationui.Active * MapZoom;
@@ -700,8 +706,11 @@ namespace ElectricityNetView
                 circle.Width = 2 * r;
                 circle.Height = 2 * r;
                 CanvasMap.Children.Add(circle);
+                CanvasMap.Children.Add(tb);
                 Canvas.SetLeft(circle, dx + 512-r);
-                Canvas.SetTop(circle, dy + 512-r);
+                Canvas.SetTop(circle, -dy + 512 - r);
+                Canvas.SetLeft(tb, dx + 512);
+                Canvas.SetTop(tb,- dy + 512);
             }
 
         }
